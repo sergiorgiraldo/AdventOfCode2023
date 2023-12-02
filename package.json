@@ -3,7 +3,8 @@
 		"@types/jest": "^29.5.10",
 		"jest": "^29.7.0"
 	},
-    "scripts": {
-        "test": "jest --verbose"
-    }
+	"scripts": {
+		"test": "jest --verbose"
+	},
+	"version": "2.1.0"
 }

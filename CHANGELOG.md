@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v2.0.0...v2.1.0) (2023-12-02)
+
+
+### Features
+
+* unit testing using jest ([2a7c220](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/2a7c2208a4a0c8e26332f998d71868fd91742d2b))
+
 ## [2.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v1.0.0...v2.0.0) (2023-12-02)
 
 
