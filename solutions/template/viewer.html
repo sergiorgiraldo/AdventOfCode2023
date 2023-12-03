@@ -1,43 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Solution Viewer</title>
-    <style>
-      html, body { font-family: sans-serif; }
-      pre { border-radius: 0.5em; padding: 0.5em; background: #eee; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  </head>
-  <body>
-    <div id="viewer">
-      <h1>Solution Viewer ({{ solutionTitle }})</h1>
-      <p>For interesting problems; this page can be used as a dynamic viewer.</p>
-      <h3><a href="./input.txt">input.txt</a></h3>
-      <pre><code>{{ inputText }}</code></pre>
-      <h3><a href="./solution.js">solution.js</a></h3>
-      <pre><code>{{ solutionText }}</code></pre>
-    </div>
-    <script>
-const app = new Vue({
-  el: '#viewer',
-  data: () => {
-    return {
-      solutionText: '[Loading]',
-      inputText: '[Loading]'
+
+<head>
+  <title>Solution Viewer</title>
+  <style>
+    html,
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
-  },
-  computed: {
-    solutionTitle() {
-      const parts = (document.location + '').split('/')
-      return parts.reverse()[1]
+
+    pre {
+      border-radius: 0.5em;
+      padding: 0.5em;
+      background: #eee;
+      font-family: hack, monospace;
     }
-  },
-  async mounted () {
-    this.solutionText = (await axios.get('./solution.js')).data
-    this.inputText = (await axios.get('./input.txt')).data
-  }
-})
-    </script>
-  </body>
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+</head>
+
+<body>
+  <a href="../">Back to solutions</a>
+  <div id="viewer">
+    <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
+    <h3><a href="./answer.txt">ANSWERS</a></h3>
+    <pre><code>{{ answerText }}</code></pre>
+    <h3><a href="./solution.js">solution.js</a></h3>
+    <pre><code>{{ solutionText }}</code></pre>
+    <h3><a href="./input.txt">input.txt</a></h3>
+    <pre><code>{{ inputText }}</code></pre>
+  </div>
+  <script>
+    const viewer = new Vue({
+      el: "#viewer",
+      data: {
+        inputText: "-Loading-",
+        solutionText: "-Loading-",
+        answerText: "-Loading-",
+      },
+      mounted() {
+        axios.get("./answer.txt").then((response) => {
+          this.answerText = response.data;
+        });
+        axios.get("./input.txt").then((response) => {
+          this.inputText = response.data;
+        });
+        axios.get("./solution.js").then((response) => {
+          this.solutionText = response.data;
+        });
+      }
+    });
+    viewer.$mount("#viewer");
+    const solutionTitle = (document.location.href + "").split("/").reverse()[1];
+    document.getElementById("solutionTitle").innerText = solutionTitle;
+
+  </script>
+</body>
+
 </html>
