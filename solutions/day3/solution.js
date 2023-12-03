@@ -3,17 +3,19 @@ const { position } = require("promise-path");
 const readline = require("readline");
 const fs = require("fs");
 const fromHere = position(__dirname);
+var streamAnswer = fs.createWriteStream(path.join(__dirname, "answer.txt"), {flags:"a"});
 const report = (...messages) => {
-  console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
-}
+    streamAnswer.write(JSON.stringify(messages) + "\n");
+    console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
+  };
 const lib003 = require("../lib/003");
 
-async function run () {
-    await solveForFirstStar();
-    await solveForSecondStar();
+ function run () {
+    solveForFirstStar();
+    solveForSecondStar();
 }
 
-async function solveForFirstStar () {
+ function solveForFirstStar () {
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -30,7 +32,7 @@ async function solveForFirstStar () {
   });
 }
 
-async function solveForSecondStar () {
+ function solveForSecondStar () {
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)

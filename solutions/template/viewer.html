@@ -24,6 +24,8 @@
   <a href="../">Back to solutions</a>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
+    <h3><a href="./answer.txt">ANSWERS</a></h3>
+    <pre><code>{{ answerText }}</code></pre>
     <h3><a href="./solution.js">solution.js</a></h3>
     <pre><code>{{ solutionText }}</code></pre>
     <h3><a href="./input.txt">input.txt</a></h3>
@@ -35,8 +37,12 @@
       data: {
         inputText: "-Loading-",
         solutionText: "-Loading-",
+        answerText: "-Loading-",
       },
       mounted() {
+        axios.get("./answer.txt").then((response) => {
+          this.answerText = response.data;
+        });
         axios.get("./input.txt").then((response) => {
           this.inputText = response.data;
         });
