@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v3.0.0...v3.1.0) (2023-12-03)
+
+
+### Features
+
+* publish answers ([da736e5](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/da736e5a5a8b63fd1fe067cf6f4bc0a4615355ea))
+
+
+### Bug Fixes
+
+* fixed the solution viewer ([dcb91fb](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/dcb91fb5cc69debb42cce936620293c650150f31))
+
 ## [3.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v2.1.0...v3.0.0) (2023-12-03)
 
 
