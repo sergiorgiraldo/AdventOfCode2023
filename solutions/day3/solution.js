@@ -3,7 +3,9 @@ const { position } = require("promise-path");
 const readline = require("readline");
 const fs = require("fs");
 const fromHere = position(__dirname);
-const report = (...messages) => console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
+const report = (...messages) => {
+  console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
+}
 const lib003 = require("../lib/003");
 
 async function run () {
