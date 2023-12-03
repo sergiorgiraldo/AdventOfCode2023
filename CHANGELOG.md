@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v2.1.0...v3.0.0) (2023-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* day three completed
+
+### Features
+
+* day three completed ([28dd79c](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/28dd79cea750627d0bde4afc924cc9358afc24df))
+* generic structure with template ([f691d85](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/f691d857127d753606750fbb1ef33c069a78dc0a))
+
 ## [2.1.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v2.0.0...v2.1.0) (2023-12-02)
 
 
