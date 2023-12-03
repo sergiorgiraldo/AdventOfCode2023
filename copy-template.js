@@ -56,7 +56,7 @@ async function copyTemplate () {
 
   const currentPath = fromHere('/')
   const currentFolder = currentPath.split('/').reverse()[1]
-  const currentYear = currentFolder.split('-').pop()
+  const currentYear = currentFolder.slice(-4)
   const currentDay = Number.parseInt(newFolderName.replace('day', ''))
 
   report(`Based on the path, ${currentFolder} I think its: ${currentYear}, and you're trying to solve: Day ${currentDay}`)
