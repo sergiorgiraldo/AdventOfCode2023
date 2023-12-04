@@ -1,6 +1,14 @@
 # AdventOfCode2023
+
+## Puzzles from 
+
 https://adventofcode.com/2023/
 
+## My solutions
+
+https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
+
+## Development
 
 To run a solution by day, use:
 `npm start day2`
@@ -12,5 +20,6 @@ to run test by day, use:
 or run all tests:
 `npm test`
 
---
-based in https://github.com/johnbeech/advent-of-code-nodejs-template
+## Based in 
+
+https://github.com/johnbeech/advent-of-code-nodejs-template

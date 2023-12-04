@@ -76,7 +76,13 @@ async function copyTemplate() {
 	report("Creating:", testPath);
 	write(
 		testPath,
-		`const lib = require('../solutions/lib/${newFolderName}');`
+`
+const lib = require('../solutions/lib/${newFolderName}');
+
+test("Sanity check", () => {
+	expect(true).toBe(true);
+});
+`
 	);
 
 	const libsPath = fromHere(`solutions/lib/${newFolderName}.js`);
