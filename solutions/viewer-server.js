@@ -22,7 +22,7 @@ async function generateIndexHTML() {
 		.filter((n) => n.indexOf(".js") === -1 && n.indexOf(".html") === -1)
 		.map((solution) => {
 			const folder = solution.substr(fromHere("../").length);
-			return `      <li><a href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/${folder}/viewer.html">${folder}</a></li>`;
+			return `      <li><a href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${folder}</a></li>`;
 		});
 
 	const html = `<!DOCTYPE html>
@@ -46,12 +46,16 @@ ${links.join("\n")}
 	return html;
 }
 
-app.use("/solutions", express.static(fromHere("")));
+// app.use("/solutions", express.static(fromHere("")));
 
-app.get("/", async (req, res) => {
-	const html = await generateIndexHTML();
-	res.send(html);
-});
+// app.get("/", async (req, res) => {
+// 	const html = await generateIndexHTML();
+// 	res.send(html);
+// });
 
-const port = 8080;
-app.listen(port, () => report(`Listening on http://localhost:${port}/`));
+// const port = 8080;
+// app.listen(port, () => report(`Listening on http://localhost:${port}/`));
+
+generateIndexHTML();
+
+report("Push to main and go to https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/");
