@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.1.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v4.0.0...v4.1.0) (2023-12-04)
+
+
+### Features
+
+* create test file and lib file from the template command ([e2e2f8f](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/e2e2f8fad9ae6a60f0fb029fcb782af1db86fdb3))
+* output lib in viewer ([d61219c](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/d61219c785884caca7932fd7d08a51b45505480c))
+* rename libs ([8f9fdef](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/8f9fdefc36e30d750bb39f3eff1f8b2c6d9191e5))
+
 ## [4.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v3.1.0...v4.0.0) (2023-12-04)
 
 
