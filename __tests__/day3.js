@@ -1,4 +1,4 @@
-const lib003 = require("../solutions/lib/003");
+const lib003 = require("../solutions/lib/day3");
 
 test("Sum of Parts", () => {
 	const engine = [];

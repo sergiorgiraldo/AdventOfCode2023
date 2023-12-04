@@ -1,4 +1,4 @@
-const lib004 = require("../solutions/lib/004");
+const lib004 = require("../solutions/lib/day4");
 
 test("Winning Points - game 1", () => {
     const game="Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53";

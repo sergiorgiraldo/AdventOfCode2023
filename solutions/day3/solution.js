@@ -8,7 +8,7 @@ const report = (...messages) => {
     streamAnswer.write(JSON.stringify(messages) + "\n");
     console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
   };
-const lib003 = require("../lib/003");
+const lib003 = require("../lib/day3");
 
  function run () {
     solveForFirstStar();

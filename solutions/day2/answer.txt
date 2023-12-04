@@ -1,2 +1,4 @@
 ["Solution 1:",2006]
 ["Solution 2:",84911]
+["Solution 1:",2006]
+["Solution 2:",84911]
