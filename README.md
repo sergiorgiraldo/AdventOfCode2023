@@ -13,4 +13,4 @@ or run all tests:
 `npm test`
 
 --
-from: https://github.com/johnbeech/advent-of-code-nodejs-template
+based in https://github.com/johnbeech/advent-of-code-nodejs-template
