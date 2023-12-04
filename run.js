@@ -21,7 +21,6 @@ function runSolution() {
 async function copyTemplate() {
 	try {
 		await require("./copy-template.js");
-		await runSolution();
 	} catch (ex) {
 		console.error(
 			`Unable to run solution for '${solutionId}': ${ex}`,

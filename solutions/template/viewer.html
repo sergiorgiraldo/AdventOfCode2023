@@ -26,6 +26,8 @@
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
     <h3><a href="./answer.txt">ANSWERS</a></h3>
     <pre><code>{{ answerText }}</code></pre>
+    <h3><a href="../lib/dayTODO.js">lib</a></h3>
+    <pre><code>{{ libText }}</code></pre>
     <h3><a href="./solution.js">solution.js</a></h3>
     <pre><code>{{ solutionText }}</code></pre>
     <h3><a href="./input.txt">input.txt</a></h3>
@@ -38,6 +40,7 @@
         inputText: "-Loading-",
         solutionText: "-Loading-",
         answerText: "-Loading-",
+        libText: "-Loading-",
       },
       mounted() {
         axios.get("./answer.txt").then((response) => {
@@ -48,6 +51,9 @@
         });
         axios.get("./solution.js").then((response) => {
           this.solutionText = response.data;
+        });
+        axios.get("../lib/dayTODO.js").then((response) => {
+          this.libText = response.data;
         });
       }
     });

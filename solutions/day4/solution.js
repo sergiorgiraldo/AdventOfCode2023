@@ -3,12 +3,13 @@ const { position } = require("promise-path");
 const readline = require("readline");
 const fs = require("fs");
 const fromHere = position(__dirname);
+fs.unlinkSync(path.join(__dirname, "answer.txt"));
 var streamAnswer = fs.createWriteStream(path.join(__dirname, "answer.txt"), {flags:"a"});
 const report = (...messages) => {
     streamAnswer.write(JSON.stringify(messages) + "\n");
     console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
   };
-const lib = require("../lib/004");
+const lib = require("../lib/day4");
 
  function run () {
     solveForFirstStar();

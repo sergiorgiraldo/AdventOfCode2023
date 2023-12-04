@@ -1,4 +1,4 @@
-const lib002 = require("../solutions/lib/002");
+const lib002 = require("../solutions/lib/day2");
 
 test("Game 1-Allowed", () => {
     const game="Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";

@@ -10,6 +10,7 @@ const report = (...messages) =>
 			.shift()}]`,
 		...messages
 	);
+const fs = require("fs");
 
 async function fetchAOCDInput(currentYear, currentDay) {
 	report(
@@ -20,14 +21,14 @@ async function fetchAOCDInput(currentYear, currentDay) {
 			`aocd ${currentDay} ${currentYear}`
 		);
 		if (stderr) {
-			report(`AOCD ${currentYear} / ${currentDay}`, stderr);
+			report(`Could not fetch input for ${currentYear} / ${currentDay}`);
 		}
 		if (stdout) {
 			report(`Downloaded ${stderr.bytes} bytes of data using AOCD.`);
 		}
 		return stdout;
 	} catch (ex) {
-		report(`Could not fetch input for ${currentYear} / ${currentDay}`, ex);
+		report(`Could not fetch input for ${currentYear} / ${currentDay}`);
 	}
 	return "PASTE YOUR INPUT HERE";
 }
@@ -70,6 +71,63 @@ async function copyTemplate() {
 			return write(fromHere(newFilePath), contents);
 		})
 	);
+
+	const testPath = fromHere(`__tests__/${newFolderName}.js`);
+	report("Creating:", testPath);
+	write(
+		testPath,
+`
+const lib = require('../solutions/lib/${newFolderName}');
+
+test("Sanity check", () => {
+	expect(true).toBe(true);
+});
+`
+	);
+
+	const libsPath = fromHere(`solutions/lib/${newFolderName}.js`);
+	report("Creating:", libsPath);
+	write(libsPath, `module.exports = { };`);
+
+	const solutionsJsPath = fromHere(`solutions/${newFolderName}/solution.js`);
+	fs.readFile(solutionsJsPath, "utf8", (err, data) => {
+		if (err) {
+			throw err;
+		}
+
+		const updatedData = data.replace(
+			/TODO/g,
+			Number.parseInt(newFolderName.replace("day", "")).toString()
+		);
+
+		fs.writeFile(solutionsJsPath, updatedData, "utf8", (err) => {
+			if (err) {
+				throw err;
+			}
+
+			report("Adjusting:", solutionsJsPath);
+		});
+	});
+
+	const viewerPath = fromHere(`solutions/${newFolderName}/viewer.html`);
+	fs.readFile(viewerPath, "utf8", (err, data) => {
+		if (err) {
+			throw err;
+		}
+
+		const updatedData = data.replace(
+			/TODO/g,
+			Number.parseInt(newFolderName.replace("day", "")).toString()
+		);
+
+		fs.writeFile(viewerPath, updatedData, "utf8", (err) => {
+			if (err) {
+				throw err;
+			}
+
+			report("Adjusting:", viewerPath);
+		});
+	});
 
 	report("Attemping to download puzzle input for this date");
 
