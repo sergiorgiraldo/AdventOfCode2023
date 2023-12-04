@@ -8,7 +8,7 @@ const report = (...messages) => {
     streamAnswer.write(JSON.stringify(messages) + "\n");
     console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
   };
-const lib = require("../lib/00");
+const lib = require("../lib/004");
 
  function run () {
     solveForFirstStar();
@@ -24,7 +24,8 @@ const lib = require("../lib/00");
   let result=0;
 
   readInterface.on("line", function (line) {
-
+    const points = lib.calculateWinningPoints(line);
+    result += parseInt(points,10);
   });
   
   readInterface.on("close", function () {
@@ -38,13 +39,13 @@ const lib = require("../lib/00");
       input: fs.createReadStream(filePath)
   });
 
-  let result=0;
-
+  let lines = [];
   readInterface.on("line", function (line) {
-
+    lines.push(line);
   });
   
   readInterface.on("close", function () {
+    let result = lib.getNewCards(lines);
     report("Solution 2:", result)
   });
 }
