@@ -71,6 +71,12 @@ async function copyTemplate() {
 		})
 	);
 
+	const testPath = fromHere(`__tests__/${newFolderName}.js`);
+	write(testPath, `const lib = require('../solutions/lib/${newFolderName}');`);
+
+	const libsPath = fromHere(`solutions/lib/${newFolderName}.js`);
+	write(libsPath, `module.exports = { };`);
+
 	report("Attemping to download puzzle input for this date");
 
 	const currentPath = fromHere("/");
