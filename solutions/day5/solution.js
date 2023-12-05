@@ -9,7 +9,7 @@ const report = (...messages) => {
     streamAnswer.write(JSON.stringify(messages) + "\n");
     console.log(`[${require(fromHere("../../package.json")).logName} / ${__dirname.split(path.sep).pop()}]`, ...messages);
   };
-const lib = require("../lib/dayTODO");
+const lib = require("../lib/day5");
 
  function run () {
     solveForFirstStar();
@@ -22,13 +22,14 @@ const lib = require("../lib/dayTODO");
       input: fs.createReadStream(filePath)
   });
   
-  let result=0;
+  let lines=[];
 
   readInterface.on("line", function (line) {
-
+    lines.push(line);
   });
   
   readInterface.on("close", function () {
+    const result = lib.getLowestLocation(lines);
     report("Solution 1:", result);
   });
 }
@@ -39,13 +40,14 @@ const lib = require("../lib/dayTODO");
       input: fs.createReadStream(filePath)
   });
 
-  let result=0;
+  let lines=[];
 
   readInterface.on("line", function (line) {
-
+    lines.push(line);
   });
   
   readInterface.on("close", function () {
+    const result = lib.getLowestLocationFromRangeSeeds(lines);
     report("Solution 2:", result);
   });
 }

@@ -85,6 +85,10 @@ test("Sanity check", () => {
 `
 	);
 
+	const answerPath = fromHere(`solutions/${newFolderName}/answer.txt`);
+	report("Creating:", answerPath);
+	write(answerPath, "TODO");
+
 	const libsPath = fromHere(`solutions/lib/${newFolderName}.js`);
 	report("Creating:", libsPath);
 	write(libsPath, `module.exports = { };`);
