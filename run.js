@@ -4,6 +4,7 @@ async function start() {
 	try {
 		await runSolution();
 	} catch (ex) {
+		console.log("Error running!");
 		if (!solutionId) {
 			console.error(
 				"No solution ID provided; please re-run with an argument, e.g.: npm start day1, or: node run day1"
