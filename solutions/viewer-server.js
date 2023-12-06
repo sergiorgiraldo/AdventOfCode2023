@@ -19,23 +19,36 @@ async function generateIndexHTML() {
 	const title = packageData.logName;
 	const solutions = await find(fromHere("/*"));
 	const links = solutions
-		.filter((n) => n.indexOf(".js") === -1 && n.indexOf(".html") === -1)
+		.filter((n) => n.indexOf("day") > -1)
 		.map((solution) => {
 			const folder = solution.substr(fromHere("../").length);
-			return `      <li><a href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${folder}</a></li>`;
+			return `      <li><a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${folder.split("/")[1]}</a></li>`;
 		});
 
 	const html = `<!DOCTYPE html>
 <html>
   <head>
     <title>${title}</title>
-    <style> html, body { font-family: sans-serif; }</style>
+    <style> 
+		html, body { font-family: verdana; }
+		hr {border: 1px dashed black;}
+		a {text-decoration: none; color: black;}
+		a:visited {color: black;}	
+		a.days {text-transform: capitalize; color:darkolivegreen}
+		a.days:visited {color: darkolivegreen;}	
+		a:hover {text-decoration: underline;}
+		i {font-size: x-small;}
+	</style>
   </head>
   <body>
     <h1>${title}</h1>
+	<p>By <a href="https://github.com/sergiorgiraldo/">sergiorgiraldo</a></p>
+	<hr />
     <ul>
 ${links.join("\n")}
     </ul>
+	<hr />
+	<i>Generated on ${new Date().toUTCString()}</i>
   </body>
 </html>
   `;
