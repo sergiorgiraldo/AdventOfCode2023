@@ -24,7 +24,7 @@ async function fetchAOCDInput(currentYear, currentDay) {
 			report(`Could not fetch input for ${currentYear} / ${currentDay}`);
 		}
 		if (stdout) {
-			report(`Downloaded ${stderr.bytes} bytes of data using AOCD.`);
+			report(`Downloaded using AOCD.`);
 		}
 		return stdout;
 	} catch (ex) {
