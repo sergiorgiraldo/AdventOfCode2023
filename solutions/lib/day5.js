@@ -1,5 +1,5 @@
 const inputs = {
-	seed: 0,
+	seed: [],
 	seedToSoil: [],
 	soilToFertilizer: [],
 	fertilizerToWater: [],
@@ -19,14 +19,14 @@ const maps = {
 	humidityToLocation: []
 };
 
-function buildMaps(inputs, map) {
+function buildMap(inputs, whichMap) {
 	for (let i = 0; i < inputs.length; i++) {
-		let tokens = inputs[i].split(" ").map(Number);
+		let tokens = inputs[i].split(/\s+/).map(Number);
 		let destinationRangeStart = tokens[0];
 		let sourceRangeStart = tokens[1];
 		let rangeLength = tokens[2];
 
-		map.push({
+		whichMap.push({
 			destStart: destinationRangeStart,
 			sourceStart: sourceRangeStart,
 			rangeLength: rangeLength
@@ -35,31 +35,26 @@ function buildMaps(inputs, map) {
 }
 
 function getMapValue(source, map) {
-	let dest = source;
+	let value = source;
 	for (let i = 0; i < map.length; i++) {
-		let range = map[i];
-		if (
-			source >= range.sourceStart &&
-			source < range.sourceStart + range.rangeLength
-		) {
-			dest = range.destStart + (source - range.sourceStart);
+		let token = map[i];
+		if (source >= token.sourceStart && source < token.sourceStart + token.rangeLength) {
+			value = token.destStart + (source - token.sourceStart);
 			break;
 		}
 	}
 
-	return dest;
+	return value;
 }
 
 function getLocationFromSeed(seed, maps) {
-	let soil, fertilizer, water, light, temperature, humidity, location;
-
-	soil = getMapValue(seed, maps.seedToSoil);
-	fertilizer = getMapValue(soil, maps.soilToFertilizer);
-	water = getMapValue(fertilizer, maps.fertilizerToWater);
-	light = getMapValue(water, maps.waterToLight);
-	temperature = getMapValue(light, maps.lightToTemperature);
-	humidity = getMapValue(temperature, maps.temperatureToHumidity);
-	location = getMapValue(humidity, maps.humidityToLocation);
+	const soil = getMapValue(seed, maps.seedToSoil);
+	const fertilizer = getMapValue(soil, maps.soilToFertilizer);
+	const water = getMapValue(fertilizer, maps.fertilizerToWater);
+	const light = getMapValue(water, maps.waterToLight);
+	const temperature = getMapValue(light, maps.lightToTemperature);
+	const humidity = getMapValue(temperature, maps.temperatureToHumidity);
+	const location = getMapValue(humidity, maps.humidityToLocation);
 
 	return location;
 }
@@ -72,7 +67,7 @@ function buildInputsAndMaps(lines) {
 		}
 		switch (true) {
 			case lines[i].startsWith("seeds: "):
-				inputs.seed = lines[i].substring(7).split(" ").map(Number);
+				inputs.seed = lines[i].split(": ")[1].split(/\s+/).map(Number);
 				break;
 			case lines[i].startsWith("seed-to-soil"):
 				source = "seedToSoil";
@@ -101,13 +96,13 @@ function buildInputsAndMaps(lines) {
 		}
 	}
 
-	buildMaps(inputs.seedToSoil, maps.seedToSoil);
-	buildMaps(inputs.soilToFertilizer, maps.soilToFertilizer);
-	buildMaps(inputs.fertilizerToWater, maps.fertilizerToWater);
-	buildMaps(inputs.waterToLight, maps.waterToLight);
-	buildMaps(inputs.lightToTemperature, maps.lightToTemperature);
-	buildMaps(inputs.temperatureToHumidity, maps.temperatureToHumidity);
-	buildMaps(inputs.humidityToLocation, maps.humidityToLocation);
+	buildMap(inputs.seedToSoil, maps.seedToSoil);
+	buildMap(inputs.soilToFertilizer, maps.soilToFertilizer);
+	buildMap(inputs.fertilizerToWater, maps.fertilizerToWater);
+	buildMap(inputs.waterToLight, maps.waterToLight);
+	buildMap(inputs.lightToTemperature, maps.lightToTemperature);
+	buildMap(inputs.temperatureToHumidity, maps.temperatureToHumidity);
+	buildMap(inputs.humidityToLocation, maps.humidityToLocation);
 }
 
 function getLowestLocation(lines) {
@@ -135,6 +130,7 @@ function getLowestLocationFromRangeSeeds(lines) {
 		}));
 
 	min = Number.MAX_SAFE_INTEGER;
+	
 	for (let i = 0; i < inputs.seed.length; i += 2) {
 		let start = inputs.seed[i];
 		let end = start + inputs.seed[i + 1] - 1;
