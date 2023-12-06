@@ -15,13 +15,19 @@
       background: #eee;
       font-family: hack, monospace;
     }
+    span {
+      text-transform: capitalize;
+      color: darkgreen;
+    }
+    a.nav{color: black}
+    a.nav:visited{color: black}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
 </head>
 
 <body>
-  <a href="../">Back to solutions</a>
+  <a class="nav" href="../">Back to solutions</a>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
     <h3><a href="./answer.txt">ANSWERS</a></h3>
@@ -54,7 +60,7 @@
     viewer.$mount("#viewer");
     const solutionTitle = (document.location.href + "").split("/").reverse()[1];
     document.getElementById("solutionTitle").innerText = solutionTitle;
-
+    document.title = solutionTitle;
   </script>
 </body>
 

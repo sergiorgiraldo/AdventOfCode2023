@@ -17,6 +17,7 @@ const lib = require("../lib/day6");
 }
 
  function solveForFirstStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -29,12 +30,14 @@ const lib = require("../lib/day6");
   });
   
   readInterface.on("close", function () {
+    const end = Date.now();
     const result = lib.LetsWinTheRace(lines);
-    report("Solution 1:", result);
+    report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
 
  function solveForSecondStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -47,8 +50,9 @@ const lib = require("../lib/day6");
   });
   
   readInterface.on("close", function () {
+    const end = Date.now();
     const result = lib.LetsWinTheRace_Kerning(lines);
-    report("Solution 2:", result);
+    report("Solution 2:", result, ` Execution time: ${end - start} ms`);
   });
 }
 

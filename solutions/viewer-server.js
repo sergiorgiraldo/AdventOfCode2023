@@ -1,5 +1,5 @@
 const path = require("path");
-const express = require("express");
+// const express = require("express");
 const { position, find, write } = require("promise-path");
 const fromHere = position(__dirname);
 const report = (...messages) =>
@@ -12,7 +12,7 @@ const report = (...messages) =>
 		...messages
 	);
 
-const app = express();
+// const app = express();
 const packageData = require("../package.json");
 
 async function generateIndexHTML() {
