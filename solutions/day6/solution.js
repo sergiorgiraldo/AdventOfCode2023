@@ -30,8 +30,8 @@ const lib = require("../lib/day6");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     const result = lib.LetsWinTheRace(lines);
+    const end = Date.now();
     report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
@@ -50,8 +50,8 @@ const lib = require("../lib/day6");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     const result = lib.LetsWinTheRace_Kerning(lines);
+    const end = Date.now();
     report("Solution 2:", result, ` Execution time: ${end - start} ms`);
   });
 }

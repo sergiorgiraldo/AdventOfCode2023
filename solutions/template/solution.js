@@ -31,7 +31,6 @@ const lib = require("../lib/dayTODO");
   
   readInterface.on("close", function () {
     const end = Date.now();
-
     report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
@@ -51,7 +50,6 @@ const lib = require("../lib/dayTODO");
   
   readInterface.on("close", function () {
     const end = Date.now();
-
     report("Solution 2:", result, ` Execution time: ${end - start} ms`);
   });
 }

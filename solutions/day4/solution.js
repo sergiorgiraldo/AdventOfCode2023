@@ -49,8 +49,8 @@ const lib = require("../lib/day4");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     let result = lib.getNewCards(lines);
+    const end = Date.now();
     report("Solution 2:", result, ` Execution time: ${end - start} ms`)
   });
 }

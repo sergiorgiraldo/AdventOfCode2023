@@ -30,8 +30,8 @@ const lib = require("../lib/day5");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     const result = lib.getLowestLocation(lines);
+    const end = Date.now();
     report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
@@ -50,8 +50,8 @@ const lib = require("../lib/day5");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     const result = lib.getLowestLocationFromRangeSeeds(lines);
+    const end = Date.now();
     report("Solution 2:", result, ` Execution time: ${end - start} ms`);
   });
 }

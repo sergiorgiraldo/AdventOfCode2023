@@ -29,8 +29,8 @@ const lib003 = require("../lib/day3");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     let result = lib003.getSumOfParts(lines);
+    const end = Date.now();
     report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
@@ -48,8 +48,8 @@ const lib003 = require("../lib/day3");
   });
   
   readInterface.on("close", function () {
-    const end = Date.now();
     let result = lib003.getGearsRatio(lines);
+    const end = Date.now();
     report("Solution 2:", result, ` Execution time: ${end - start} ms`)
   });
 }
