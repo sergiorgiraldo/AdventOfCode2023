@@ -17,6 +17,7 @@ const lib = require("../lib/day4");
 }
 
  function solveForFirstStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -30,11 +31,13 @@ const lib = require("../lib/day4");
   });
   
   readInterface.on("close", function () {
-    report("Solution 1:", result);
+    const end = Date.now();
+    report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
 
  function solveForSecondStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -47,7 +50,8 @@ const lib = require("../lib/day4");
   
   readInterface.on("close", function () {
     let result = lib.getNewCards(lines);
-    report("Solution 2:", result)
+    const end = Date.now();
+    report("Solution 2:", result, ` Execution time: ${end - start} ms`)
   });
 }
 

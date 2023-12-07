@@ -27,14 +27,14 @@
 </head>
 
 <body>
-  <a class="nav" href="../">Back to solutions</a> 
+  <a class="nav" href="../">Back to solutions</a>  
   <br />
   <a class="nav" id="puzzle" href="">Puzzle</a>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
     <h3><a href="./answer.txt">ANSWERS</a></h3>
     <pre><code>{{ answerText }}</code></pre>
-    <h3><a href="../lib/day3.js">lib</a></h3>
+    <h3><a href="../lib/day7.js">lib</a></h3>
     <pre><code>{{ libText }}</code></pre>
     <h3><a href="./solution.js">solution.js</a></h3>
     <pre><code>{{ solutionText }}</code></pre>
@@ -60,7 +60,7 @@
         axios.get("./solution.js").then((response) => {
           this.solutionText = response.data;
         });
-        axios.get("../lib/day3.js").then((response) => {
+        axios.get("../lib/day7.js").then((response) => {
           this.libText = response.data;
         });
       }

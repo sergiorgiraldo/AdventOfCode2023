@@ -1,2 +1,2 @@
-["Solution 1:",27059]
-["Solution 2:",5744979]
+["Solution 1:",27059," Execution time: 6 ms"]
+["Solution 2:",5744979," Execution time: 10 ms"]

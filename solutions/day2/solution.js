@@ -17,6 +17,7 @@ function run () {
 }
 
 function solveForFirstStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -30,11 +31,13 @@ function solveForFirstStar () {
   });
   
   readInterface.on("close", function () {
-    report("Solution 1:", result);
+    const end = Date.now();
+    report("Solution 1:", result, ` Execution time: ${end - start} ms`);
   });
 }
 
 function solveForSecondStar () {
+  const start = Date.now();
   const filePath = path.join(__dirname, "input.txt");
   const readInterface = readline.createInterface({
       input: fs.createReadStream(filePath)
@@ -47,7 +50,8 @@ function solveForSecondStar () {
       result += power;
   });
   readInterface.on("close", function () {
-    report("Solution 2:", result)
+    const end = Date.now();
+    report("Solution 2:", result, ` Execution time: ${end - start} ms`)
   });
 }
 

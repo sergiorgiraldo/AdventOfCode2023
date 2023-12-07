@@ -16,7 +16,7 @@ const report = (...messages) => {
 		...messages
 	);
 };
-const lib = require("../lib/dayTODO");
+const lib = require("../lib/day7");
 
 function run() {
 	solveForFirstStar();
@@ -30,11 +30,13 @@ function solveForFirstStar() {
 		input: fs.createReadStream(filePath)
 	});
 
-	let result = 0;
-
-	readInterface.on("line", function (line) {});
+	let lines = [];
+	readInterface.on("line", function (line) {
+		lines.push(line);
+	});
 
 	readInterface.on("close", function () {
+		let result = lib.getTotalWinnings(lines);
 		const end = Date.now();
 		report("Solution 1:", result, ` Execution time: ${end - start} ms`);
 	});
@@ -47,11 +49,13 @@ function solveForSecondStar() {
 		input: fs.createReadStream(filePath)
 	});
 
-	let result = 0;
-
-	readInterface.on("line", function (line) {});
+	let lines = [];
+	readInterface.on("line", function (line) {
+		lines.push(line);
+	});
 
 	readInterface.on("close", function () {
+		let result = lib.getTotalWinningsWithJoker(lines);
 		const end = Date.now();
 		report("Solution 2:", result, ` Execution time: ${end - start} ms`);
 	});
