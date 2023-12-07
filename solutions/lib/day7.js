@@ -14,8 +14,19 @@ const faceCardWithJokerValues = {
 	A: 14
 };
 
+const gameValues = {
+	HighCard: 1,
+	Pair: 2,
+	TwoPairs: 4,
+	ThreeOfAKind: 8,
+	FullHouse: 16,
+	FourOfAKind: 32,
+	FiveOfAKind: 64
+};
+
 function getTotalWinnings(hands) {
     sortHands(hands, sortTwoHandsDefault);
+	
 	return getWinnings(hands);
 }
 
@@ -76,19 +87,14 @@ function sortTwoHandsWithJokers(cardsA, cardsB) {
 }
 
 function getGamesWithJoker(hand) {
-	const jokerRegex = /J/;
+	const jokerRegex = /J/g;
 
-	if (!jokerRegex.test(hand)) {
-		return [hand];
-	}
+	if (!jokerRegex.test(hand)) return [hand];
 
 	const handGame = getHandGame(hand);
 
-	const possibleGames = [];
-	for (let card in handGame) {
-		possibleGames.push(hand.replace(/J/g, card));
-	}
-
+	const possibleGames = Object.keys(handGame).map(card => hand.replace(jokerRegex, card));
+	
 	return possibleGames;
 }
 
@@ -97,29 +103,29 @@ function calculateHandValue(hand) {
 
 	let hasPair = false;
 	let hasThreeOfAKind = false;
-
 	for (const card in handGame) {
-		const val = handGame[card];
-		if (val === 5) {
-			return 7; // Five of a kind
-		} else if (val === 4) {
-			return 6; // Four of a kind
-		} else if ((val === 3 && hasPair) || (val === 2 && hasThreeOfAKind)) {
-			return 5; // Full house
-		} else if (val === 2 && hasPair) {
-			return 3; // Two pairs
-		} else if (val === 3) {
+		const handRank = handGame[card];
+
+		if (handRank === 5) return gameValues["FiveOfAKind"];
+		
+		if (handRank === 4) return gameValues["FourOfAKind"]; 
+		
+		if ((handRank === 3 && hasPair) || (handRank === 2 && hasThreeOfAKind)) return gameValues["FullHouse"]; 
+		
+		if (handRank === 2 && hasPair) return gameValues["TwoPairs"];
+
+		if (handRank === 3) {
 			hasThreeOfAKind = true;
-		} else if (val === 2) {
+		} else if (handRank === 2) {
 			hasPair = true;
 		}
 	}
+	
+	if (hasThreeOfAKind) return gameValues["ThreeOfAKind"]; 
+	
+	if (hasPair) return gameValues["Pair"];
 
-	if (hasThreeOfAKind) return 4;
-
-	if (hasPair) return 2;
-
-	return 1; // High card
+	return gameValues["HighCard"];
 }
 
 function getHandGame(hand) {
