@@ -6,9 +6,8 @@ function getSumOfParts(lines) {
 
 		for (const number of partNumbers) {
 			const [partNumber] = number;
-
 			const startIndex = Math.max((number.index ?? 0) - 1, 0);
-			const endIndex = startIndex + partNumber.length + 2; 
+			const endIndex = startIndex + partNumber.length + 2; // +2 because slice does not include the end index
 
 			const match = [i - 1, i, i + 1].some((index) => {
 				return lines[index]
@@ -35,8 +34,7 @@ function getGearsRatio(lines) {
 		for (const gear of gears) {
 			const ratios = [];
 			const gearStartIndex = Math.max((gear.index ?? 0) - 1, 0);
-			const gearEndIndex = gearStartIndex + 2;
-
+			const gearEndIndex = gearStartIndex + 2; //+2 because it should be 1 position after the asterisk
 			[i - 1, i, i + 1].forEach((index) => {
 				const partNumbers = [...lines[index].matchAll(/\d+/g)];// Match all numbers
 				for (const number of partNumbers) {
