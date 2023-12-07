@@ -28,6 +28,8 @@
 
 <body>
   <a class="nav" href="../">Back to solutions</a>
+  <br />
+  <a class="nav" id="puzzle" href="">Puzzle</a>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
     <h3><a href="./answer.txt">ANSWERS</a></h3>
@@ -67,7 +69,8 @@
     const solutionTitle = (document.location.href + "").split("/").reverse()[1];
     document.getElementById("solutionTitle").innerText = solutionTitle;
     document.title = solutionTitle;
-
+    const solutionDay = solutionTitle.split("day")[1];
+    document.getElementById("puzzle").href = "https://adventofcode.com/2023/day/" + solutionDay;
   </script>
 </body>
 
