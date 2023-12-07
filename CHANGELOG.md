@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v6.0.0...v7.0.0) (2023-12-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* day seven completed
+
+### Features
+
+* day seven completed ([658d831](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/658d831a6f5814d5c2a873c567ce8f59a64e81a6))
+* store execution times ([fee41b1](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/fee41b1caa4b61e4e758370a99f0872352e0e66d))
+
 ## [6.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v5.0.0...v6.0.0) (2023-12-06)
 
 
