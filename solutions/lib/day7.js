@@ -15,38 +15,38 @@ const faceCardPlusJokerVals = {
 };
 
 function getTotalWinnings(hands) {
-	hands.sort((a, b) => {
-		const cardsA = a.split(/\s+/)[0];
-		const cardsB = b.split(/\s+/)[0];
-		return sortTwoHands(cardsA, cardsB);
-	});
-
+    sortHands(hands, sortTwoHandsDefault);
 	return getWinnings(hands);
 }
 
 function getTotalWinningsWithJoker(hands) {
-	hands.sort((a, b) => {
-		const cardsA = a.split(/\s+/)[0];
-		const cardsB = b.split(/\s+/)[0];
-		return sortTwoHandsWithJokers(cardsA, cardsB);
-	});
+    sortHands(hands, sortTwoHandsWithJokers);
 
 	return getWinnings(hands);
 }
+
+function sortHands(hands, sortMethod) {
+    hands.sort((a, b) => {
+      const cardsA = a.split(/\s+/)[0];
+      const cardsB = b.split(/\s+/)[0];
+      return sortMethod(cardsA, cardsB);
+    });
+  }
 
 function getWinnings(hands) {
 	hands.reverse();
 
 	let totalWinnings = 0;
-	for (let i = 0; i < hands.length; i++) {
-		const bid = hands[i].split(/\s+/)[1];
-		totalWinnings += bid * (i + 1);
-	}
+
+    hands.map((hand, index) => {
+		const bid = hand.split(/\s+/)[1];
+		totalWinnings += bid * (index + 1);
+    });
 
 	return totalWinnings;
 }
 
-function sortTwoHands(cardsA, cardsB) {
+function sortTwoHandsDefault(cardsA, cardsB) {
 	const handValueA = calculateHandValue(cardsA);
 	const handValueB = calculateHandValue(cardsB);
 
