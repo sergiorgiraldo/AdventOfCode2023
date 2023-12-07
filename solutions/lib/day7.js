@@ -6,7 +6,7 @@ const faceCardNormalValues = {
 	A: 14
 };
 
-const faceCardPlusJokerVals = {
+const faceCardWithJokerValues = {
 	T: 10,
 	J: 1, //joker
 	Q: 12,
@@ -69,7 +69,7 @@ function sortTwoHandsWithJokers(cardsA, cardsB) {
 		.sort((a, b) => b - a)[0];
 	
     if (handValueA === handValueB) {
-		return findHigherCard(cardsA, cardsB, faceCardPlusJokerVals);
+		return findHigherCard(cardsA, cardsB, faceCardWithJokerValues);
 	} else {
 		return handValueA > handValueB ? -1 : 1;
 	}
