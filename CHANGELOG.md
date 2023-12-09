@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v8.0.0...v9.0.0) (2023-12-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* day nine completed
+
+### Features
+
+* day nine completed ([e0d0f9b](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/e0d0f9bb433afd26d280d7ce76a2c73f29a66204))
+
 ## [8.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v7.0.0...v8.0.0) (2023-12-08)
 
 
