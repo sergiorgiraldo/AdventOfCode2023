@@ -36,8 +36,9 @@ function buildMap(inputs, whichMap) {
 
 function getMapValue(source, map) {
 	let value = source;
+
 	for (let i = 0; i < map.length; i++) {
-		let token = map[i];
+		const token = map[i];
 		if (source >= token.sourceStart && source < token.sourceStart + token.rangeLength) {
 			value = token.destStart + (source - token.sourceStart);
 			break;
@@ -118,26 +119,65 @@ function getLowestLocation(lines) {
 }
 
 function getLowestLocationFromRangeSeeds(lines) {
+	let min = Number.MAX_SAFE_INTEGER;
+
 	buildInputsAndMaps(lines);
 
 	let seeds = maps.seedToSoil
 		.sort((a, b) => a.sourceStart - b.sourceStart)
 		.map((seed) => ({
 			start: seed.sourceStart,
-			end: seed.sourceStart + seed.rangeLength,
-			startLocation: getLocationFromSeed(seed.sourceStart, maps),
-			endLocation: getLocationFromSeed(seed.sourceStart + seed.rangeLength, maps)
+			end: seed.sourceStart + seed.rangeLength
 		}));
 
-	min = Number.MAX_SAFE_INTEGER;
+/*
+	I mapped the ranges and end up with a list of ranges that contain all the results that I will have brute forced to check individually. I can pick the range with the lowest starting positon, and then pick the first value in that range.
+	So I need to find the overlaps between the ranges above and the seeds.
+*/ 
 	
+/*
+	* overlaps (x: seeds mapped above, y: seed range)
+	* overlapping range starts after sourceStart
+     *  x1-------------x2
+     *        y1------------y2
+	 * Math.min(end, seeds[j].end):x2
+	 * Math.max(start, seeds[j].start):y1
+	 * x2-y1>0
+	 * 
+	 * overlapping range starts before sourceStart
+     *        x1-------------x2
+     *  y1------------y2
+	 * Math.min(end, seeds[j].end):y2
+	 * Math.max(start, seeds[j].start):x1
+	 * y2-x1>0
+	 * 
+	 * overlapping range contains source range
+     *      x1-----x2
+     *  y1------------------y2
+	 * Math.min(end, seeds[j].end):x2
+	 * Math.max(start, seeds[j].start):x1
+	 * x2-x1>0
+	 * 
+	 *  no overlaps (x: seeds mapped above, y: seed range)
+     *  x1-----x2             
+     *             y1----y2  
+	 * Math.min(end, seeds[j].end):x2
+	 * Math.max(start, seeds[j].start):y1
+	 * x2-y1<0
+	 * 
+	 *  * no overlapping range
+     *             x1-----x2
+     *    y1----y2
+	 * Math.min(end, seeds[j].end):y2
+	 * Math.max(start, seeds[j].start):x1
+	 * y2-x1<0
+*/
 	for (let i = 0; i < inputs.seed.length; i += 2) {
-		let start = inputs.seed[i];
-		let end = start + inputs.seed[i + 1] - 1;
+		const start = inputs.seed[i];
+		const end = start + inputs.seed[i + 1] - 1;
 		let location = Number.MAX_SAFE_INTEGER;
-
 		for (let j = 0; j < seeds.length; j++) {
-			let overlap = Math.min(end, seeds[j].end) - Math.max(start, seeds[j].start);
+			const overlap = Math.min(end, seeds[j].end) - Math.max(start, seeds[j].start);
 			if (overlap >= 0) {
 				let offsetBegin = start >= seeds[j].start ? start : seeds[j].start;
 				let offsetEnds = end <= seeds[j].end ? end : seeds[j].end;
