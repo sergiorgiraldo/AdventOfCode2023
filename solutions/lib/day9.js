@@ -22,11 +22,11 @@ function predictValue(line, when) {
 	let sequence = line.split(/\s+/).map(Number);
 	allSequences.push(sequence);
 
-	let newSequence = generateFromSubtraction(sequence);
+	let newSequence = generateDerivatives(sequence);
 	allSequences.push(newSequence);
 
 	while (!checkZeroes(newSequence)) {
-		newSequence = generateFromSubtraction(newSequence);
+		newSequence = generateDerivatives(newSequence);
 		allSequences.push(newSequence);
 	}
 
@@ -43,7 +43,7 @@ function inThePast(arr) {
 	return arr.slice(0, -1).reduceRight((acc, curr) => curr.at(0) - acc, 0);
 }
 
-function generateFromSubtraction(arr) {
+function generateDerivatives(arr) {
 	return arr.slice(1).map((item, index) => item - arr[index]);
 }
 

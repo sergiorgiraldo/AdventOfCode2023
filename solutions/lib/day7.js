@@ -93,7 +93,7 @@ function getGamesWithJoker(hand) {
 
 	const handGame = getHandGame(hand);
 
-	const possibleGames = Object.keys(handGame).map(card => hand.replace(jokerRegex, card));
+	const possibleGames = Object.keys(handGame).map((card) => hand.replace(jokerRegex, card));
 	
 	return possibleGames;
 }
