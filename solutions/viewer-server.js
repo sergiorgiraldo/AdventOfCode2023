@@ -20,9 +20,16 @@ async function generateIndexHTML() {
 	const solutions = await find(fromHere("/*"));
 	const links = solutions
 		.filter((n) => n.indexOf("day") > -1)
+		.sort((a, b) => {
+			const numA = /\/day(\d*)$/.exec(a)[1];
+			const numB = /\/day(\d*)$/.exec(b)[1];
+			return numA - numB;
+		})
 		.map((solution) => {
 			const folder = solution.substr(fromHere("../").length);
-			return `      <li><a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${folder.split("/")[1]}</a></li>`;
+			return `      <li><a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${
+				folder.split("/")[1]
+			}</a></li>`;
 		});
 
 	const html = `<!DOCTYPE html>
@@ -71,4 +78,6 @@ ${links.join("\n")}
 
 generateIndexHTML();
 
-report("Push to main and go to https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/");
+report(
+	"Push to main and go to https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/"
+);
