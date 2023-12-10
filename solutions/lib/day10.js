@@ -50,27 +50,27 @@ function getTiles(lines) {
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
 		
-        let crosses = 0;
-		let corner = false;
+        let walls = 0;
+		let pipe = "";
 		
         for (let j = 0; j < line.length; j++) {
 			if (isLoop[i][j]) {
 				let current = lines[i][j];
 				if (current === "|") {
-					crosses += 1;
+					walls += 1;
 				} else if (current !== "-") {
-					if (corner) {
-						if (corner === "L" && current === "7") {
-							crosses += 1;
-						} else if (corner === "F" && current === "J") {
-							crosses += 1;
+					if (pipe != "") {
+						if (pipe === "L" && current === "7") { // L:└  7:┐ => └┐
+							walls += 1;
+						} else if (pipe === "F" && current === "J") { // F:┌  J:┘ => ┌┘
+							walls += 1;
 						}
-						corner = false;
+						pipe = "";
 					} else {
-						corner = current;
+						pipe = current;
 					}
 				}
-			} else if (crosses % 2 === 1) {
+			} else if (walls % 2 === 1) {
 				count += 1;
 			}
 		}
