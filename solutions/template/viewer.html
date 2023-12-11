@@ -35,6 +35,8 @@
     <h3><a href="./answer.txt">ANSWERS</a></h3>
     <pre><code>{{ answerText }}</code></pre>
     <h3><a href="../lib/dayTODO.js">lib</a></h3>
+    <pre><code>{{ unitTestText }}</code></pre>
+    <h3><a href="../../__tests__/dayTODO.js">unit tests</a></h3>
     <pre><code>{{ libText }}</code></pre>
     <h3><a href="./solution.js">solution.js</a></h3>
     <pre><code>{{ solutionText }}</code></pre>
@@ -49,6 +51,7 @@
         solutionText: "-Loading-",
         answerText: "-Loading-",
         libText: "-Loading-",
+        unitTestText: "-Loading-"
       },
       mounted() {
         axios.get("./answer.txt").then((response) => {
@@ -62,6 +65,9 @@
         });
         axios.get("../lib/dayTODO.js").then((response) => {
           this.libText = response.data;
+        });
+        axios.get("../../__tests__/dayTODO.js").then((response) => {
+          this.unitTestText = response.data;
         });
       }
     });
