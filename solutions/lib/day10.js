@@ -43,7 +43,7 @@ function getTiles(lines) {
 		direction = delta.direction;
 
 		isLoop[y] = isLoop[y] || [];
-		isLoop[y][x] = true;
+		isLoop[y][x] = true; //assume it is in the loop and check below
 	}
 
 	let count = 0;
@@ -52,7 +52,9 @@ function getTiles(lines) {
 		
         let walls = 0;
 		let pipe = "";
-		
+
+		/*  counting the amount of walls going from left to right, and if that amount was not divisible by 2, then the tile is inside the loop. */
+
         for (let j = 0; j < line.length; j++) {
 			if (isLoop[i][j]) {
 				let current = lines[i][j];
