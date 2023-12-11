@@ -47,6 +47,8 @@ function getManhattanDistances(galaxies, rows, columns, expansion) {
 		distances[i] = [];
 		for (let j = i; j < galaxies.length; j++) {
 			//how many colums and rows are between the two galaxies
+            //traversing the grid from top to bottom and then left to right
+            //so rows are already ordered but not the columns
 			const columnExpansion = columns.filter(
 				(column) =>
 					column > Math.min(galaxies[i][1], galaxies[j][1]) &&
@@ -65,11 +67,11 @@ function getManhattanDistances(galaxies, rows, columns, expansion) {
 		}
 	}
 
-	// calculate manhattan distance for each galaxy
-	const distancesForEachGalaxy = distances.map((distance) =>
+	// calculate manhattan distance for each pair of galaxies
+	const distancesForEachPairOfGalaxies = distances.map((distance) =>
 		distance.reduce((acc, cur) => acc + cur, 0)
 	);
 
-	return distancesForEachGalaxy.reduce((acc, cur) => acc + cur, 0);
+	return distancesForEachPairOfGalaxies.reduce((acc, cur) => acc + cur, 0);
 }
 module.exports = { getShortestPaths, getShortestPathsYoungUniverse, getShortestPathsOlderUniverse };
