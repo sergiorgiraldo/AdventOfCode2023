@@ -32,9 +32,9 @@ function getTiles(lines) {
 	let y = startingStep.y;
 	let direction = startingStep.direction;
 
-	let isLoop = Array.from({ length: lines.length }, () => []);
-	isLoop[start.y][start.x] = true;
-	isLoop[y][x] = true;
+	let canMakeLoop = Array.from({ length: lines.length }, () => []);
+	canMakeLoop[start.y][start.x] = true;
+	canMakeLoop[y][x] = true;
 
 	while (x !== start.x || y !== start.y) {
 		let delta = getDelta(lines, x, y, direction);
@@ -42,8 +42,8 @@ function getTiles(lines) {
 		y += delta.y;
 		direction = delta.direction;
 
-		isLoop[y] = isLoop[y] || [];
-		isLoop[y][x] = true; //assume it is in the loop and check below
+		canMakeLoop[y] = canMakeLoop[y] || [];
+		canMakeLoop[y][x] = true; //something that we can make a loop with
 	}
 
 	let count = 0;
@@ -56,7 +56,7 @@ function getTiles(lines) {
 		/*  counting the amount of walls going from left to right, and if that amount was not divisible by 2, then the tile is inside the loop. */
 
         for (let j = 0; j < line.length; j++) {
-			if (isLoop[i][j]) {
+			if (canMakeLoop[i][j]) {
 				let current = lines[i][j];
 				if (current === "|") {
 					walls += 1;
@@ -72,7 +72,7 @@ function getTiles(lines) {
 						pipe = current;
 					}
 				}
-			} else if (walls % 2 === 1) {
+			} else if (walls % 2 === 1) { // not a pipe, so check if it is inside the loop
 				count += 1;
 			}
 		}

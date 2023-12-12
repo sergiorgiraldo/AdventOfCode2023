@@ -1,4 +1,4 @@
-const lib = require('../solutions/lib/day10');
+const lib = require("../solutions/lib/day10");
 
 test("Pipe 1", () => {
 	const lines = [];
@@ -10,7 +10,6 @@ test("Pipe 1", () => {
 
 	expect(lib.getStepsToFarthest(lines)).toBe(4);
 });
-
 
 test("Pipe 2", () => {
 	const lines = [];
@@ -49,7 +48,7 @@ test("Loop 2", () => {
 	lines.push(".|II|O|II|.");
 	lines.push(".L--JOL--J.");
 	lines.push(".....O.....");
-	
+
 	expect(lib.getTiles(lines)).toBe(4);
 });
 
