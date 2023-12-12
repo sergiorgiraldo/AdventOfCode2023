@@ -7,14 +7,12 @@ function getBrokenSprings(lines) {
 	for (let i = 0; i < field.length; i++) {
 		const combinations = generateCombinations(field[i].springs);
 
-		let possibility = 0;
-		for (let j = 0; j < combinations.length; j++) {
-			const condition = getCondition(combinations[j]);
+		const possibility = combinations.filter((combination) => {
+			const conditions = getConditions(combination);
 
-			if (condition === field[i].conditions) {
-				possibility += 1;
-			}
-		}
+			return conditions === field[i].conditions;
+		}).length;
+
 		possibilities += possibility;
 	}
 
@@ -55,7 +53,7 @@ function getField(lines) {
 	return field;
 }
 
-function getCondition(line) {
+function getConditions(line) {
 	const regex = /#+/g;
 	const matches = line.match(regex);
 	if (matches === null) {
