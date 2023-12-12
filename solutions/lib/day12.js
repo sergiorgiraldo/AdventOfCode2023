@@ -25,9 +25,10 @@ function getBrokenSpringsUnfolded(lines) {
     const field_ = getField(lines);
 
     const field = field_.map(item => {
-        item.springs = (item.springs + "?").repeat(5).slice(0, -1);
-        item.conditions = (item.conditions + ",").repeat(5).slice(0, -1);
-        return item;
+        const springs = (item.springs + "?").repeat(5).slice(0, -1);
+        const conditions = (item.conditions + ",").repeat(5).slice(0, -1);
+
+        return {springs, conditions};
       });
 
 	let possibilities = 0;
@@ -72,20 +73,17 @@ function generateCombinations(springs) {
 	return combinations;
 
     function recurse(springs) {
-		const index = springs.indexOf("?");
-		if (index === -1) {
+		const hasQuestioMark = springs.indexOf("?") >= 0;
+
+		if (hasQuestioMark) {
+			const dotString = springs.substring(0, index) + "." + springs.substring(index + 1);
+			recurse(dotString);
+			
+			const hashString = springs.substring(0, index) + "#" + springs.substring(index + 1);
+			recurse(hashString);
+		} 
+		else {
 			combinations.push(springs);
-		} else {
-			const str1 =
-				springs.substring(0, index) +
-				"." +
-				springs.substring(index + 1);
-			const str2 =
-				springs.substring(0, index) +
-				"#" +
-				springs.substring(index + 1);
-			recurse(str1);
-			recurse(str2);
 		}
 	}
 }
@@ -119,8 +117,8 @@ const checkConditionsPerLine = helpers.memoize(function (line, conditions) {
 	}
 
 	if (line[0] === "#") {
-		const run = conditions[0];
-		for (let i = 1; i < run; i++) {
+		const condition = conditions[0];
+		for (let i = 1; i < condition; i++) {
             // lines does not have enough # or ? in beginning to cover condition
             // e.g. #.#  and condition is 3
 			if (line[i] === ".") { 
@@ -130,13 +128,13 @@ const checkConditionsPerLine = helpers.memoize(function (line, conditions) {
 
         // line have more # in beginning than condition
         // e.g. #### and condition is 3
-		if (line[run] === "#") { 
+		if (line[condition] === "#") { 
 			return 0;
 		}
         // if we get to this point, we know for sure the current condition is covered
         // so we can remove it from conditions
         const remainingConditions = conditions.slice(1);
-		return checkConditionsPerLine(line.slice(run + 1), remainingConditions);
+		return checkConditionsPerLine(line.slice(condition + 1), remainingConditions);
 	}
 
 	// line[0] starts with ?, substitute with . and # and add them together

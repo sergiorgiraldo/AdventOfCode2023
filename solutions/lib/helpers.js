@@ -3,22 +3,17 @@ const gcd = (x, y) => (!y ? x : gcd(y, x % y)); // recursive, get remainder unti
 const lcm = (x, y) => (x * y) / gcd(x, y);
 
 function memoize(func) {
-	let stored = new Map();
+	let cache = new Map();
     
-	return function () {
-		var kwargs = [];
-		for (var i = 0; i < arguments.length; i++) {
-			kwargs[i] = arguments[i];
-		}
+	return function (...args) {
+		var key = args.join("~");
 
-		var current = JSON.stringify(kwargs);
-
-		if (stored.has(current)) {
-			return stored.get(current);
+		if (cache.has(key)) {
+			return cache.get(key);
 		} else {
-			const result = func.apply(void 0, kwargs);
+			const result = func(...args);
 
-			stored.set(current, result);
+			cache.set(key, result);
 			
             return result;
 		}
