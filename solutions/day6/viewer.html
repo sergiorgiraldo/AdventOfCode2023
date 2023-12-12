@@ -20,7 +20,10 @@
       color: darkgreen;
     }
     a.nav{color: black}
-    a.nav:visited{color: black}
+    a.nav:visited{color: black} 
+a.files{color: indigo;text-decoration: none;} 
+a.files:hover{text-decoration: underline;} 
+a.files:visited{color: indigo}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
@@ -32,15 +35,15 @@
   <a class="nav" id="puzzle" href="">Puzzle</a>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
-    <h3><a href="./answer.txt">ANSWERS</a></h3>
+    <h3><a class="files" href="./answer.txt">ANSWERS</a></h3>
     <pre><code>{{ answerText }}</code></pre>
-    <h3><a href="../lib/day6.js">lib</a></h3>
+    <h3><a class="files" href="../lib/day6.js">lib</a></h3>
     <pre><code>{{ libText }}</code></pre>
-    <h3><a href="../../__tests__/day6.js">unit tests</a></h3>
+    <h3><a class="files" href="../../__tests__/day6.js">unit tests</a></h3>
     <pre><code>{{ unitTestText }}</code></pre>
-    <h3><a href="./solution.js">solution.js</a></h3>
+    <h3><a class="files" href="./solution.js">solution.js</a></h3>
     <pre><code>{{ solutionText }}</code></pre>
-    <h3><a href="./input.txt">input.txt</a></h3>
+    <h3><a class="files" href="./input.txt">input.txt</a></h3>
     <pre><code>{{ inputText }}</code></pre>
   </div>
   <script>
@@ -54,21 +57,31 @@
         unitTestText: "-Loading-"
       },
       mounted() {
-        axios.get("./answer.txt").then((response) => {
-          this.answerText = response.data;
-        });
-        axios.get("./input.txt").then((response) => {
-          this.inputText = response.data;
-        });
-        axios.get("./solution.js").then((response) => {
-          this.solutionText = response.data;
-        });
-        axios.get("../lib/day6.js").then((response) => {
-          this.libText = response.data;
-        });
-        axios.get("../../__tests__/day6.js").then((response) => {
-          this.unitTestText = response.data;
-        });
+        fetch("./answer.txt")
+          .then(response => response.text())
+          .then((data) => {
+            this.answerText = data;
+          });
+        fetch("./input.txt")
+          .then(response => response.text())
+          .then((response) => {
+            this.inputText = response;
+          });
+        fetch("./solution.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.solutionText = response;
+          });
+        fetch("../lib/day6.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.libText = response;
+          });
+        fetch("../../__tests__/day6.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.unitTestText = response;
+          });
       }
     });
     viewer.$mount("#viewer");
