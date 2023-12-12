@@ -53,9 +53,10 @@ function getField(lines) {
 	return field;
 }
 
-function getConditions(line) {
+function getConditions(combination) {
 	const regex = /#+/g;
-	const matches = line.match(regex);
+	const matches = combination.match(regex);
+	
 	if (matches === null) {
 		return "";
 	} else {
