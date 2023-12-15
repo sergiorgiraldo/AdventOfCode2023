@@ -1,5 +1,5 @@
-const { greatest, identity, least } = require("./_math.js");
-const hasProp = require("./_objects.js");
+const { greatest, identity, least } = require("./math.js");
+const hasProp = require("./objects.js");
 
 /**
  * Count the items in an array which match an optional value or predicate.
