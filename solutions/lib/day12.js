@@ -98,7 +98,7 @@ function generateCombinations(springs) {
 for part2, I gave up on generating all combinations 
 instead I parsed the springs and checked them against the conditions
 */
-const checkConditionsPerLine = helpers.memoize(function (line, conditions) {
+const checkConditionsPerLine = helpers.processes.memoize(function (line, conditions) {
 	//line is empty
 	if (line.length === 0) {
 		// if conditions are empty too, we have a match, otherwise no match

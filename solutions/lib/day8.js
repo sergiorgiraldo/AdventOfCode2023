@@ -15,7 +15,7 @@ function getNumberOfGhostSteps(lines) {
 
 	const steps = startingPoints.map((pt) =>  calculateSteps(map, instructions, pt, /Z/));
 
-	const stepsTotal = steps.reduce((a, b) => helpers.lcm(a, b));
+	const stepsTotal = steps.reduce((a, b) => helpers.math.leastCommonMultiple(a, b));
 
 	return stepsTotal;
 }
