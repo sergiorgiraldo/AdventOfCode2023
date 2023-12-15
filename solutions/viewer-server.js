@@ -63,32 +63,32 @@ ${links.join("\n")}
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_arrays.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/arrays.js">
 					Arrays
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_dates.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/dates.js">
 					Dates
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_math.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/math.js">
 					Math
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_objects.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/objects.js">
 					Objects
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_processes.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/processes.js">
 					Processes
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_strings.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/strings.js">
 					Strings
 				</a>
 			</li>

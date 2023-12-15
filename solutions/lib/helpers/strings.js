@@ -1,6 +1,6 @@
 const english2Number = require("english2number");
 const uniq = require("lodash");
-const hasProp = require("./_objects.js");
+const hasProp = require("./objects.js");
 
 /**
  * Repeatedly split a string based on multiple delimiters,
