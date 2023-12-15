@@ -1,23 +1,9 @@
-const gcd = (x, y) => (!y ? x : gcd(y, x % y)); // recursive, get remainder until it is 0
 
-const lcm = (x, y) => (x * y) / gcd(x, y);
+const arrrays = require("./_arrays.js");
+const dates = require("./_dates.js");
+const math = require("./_math.js");
+const objetcs = require("./_objects.js");
+const strings = require("./_strings.js");
+const processes = require("./_processes.js");
 
-function memoize(func) {
-	let cache = new Map();
-    
-	return function (...args) {
-		var key = args.join("~");
-
-		if (cache.has(key)) {
-			return cache.get(key);
-		} else {
-			const result = func(...args);
-
-			cache.set(key, result);
-			
-            return result;
-		}
-	};
-}
-
-module.exports = { gcd, lcm, memoize };
+module.exports = {math, strings, dates, arrrays, objetcs, processes};

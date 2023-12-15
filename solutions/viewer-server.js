@@ -55,6 +55,45 @@ async function generateIndexHTML() {
 ${links.join("\n")}
     </ul>
 	<hr />
+		<h2>Libs</h2>
+		<ul>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers.js">
+					Helpers
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_arrays.js">
+					Arrays
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_dates.js">
+					Dates
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_math.js">
+					Math
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_objects.js">
+					Objects
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_processes.js">
+					Processes
+				</a>
+			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/_strings.js">
+					Strings
+				</a>
+			</li>
+		</ul>		
+	<hr />
 	<i>Generated on ${new Date().toUTCString()}</i>
   </body>
 </html>

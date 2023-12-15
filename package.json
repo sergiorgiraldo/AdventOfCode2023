@@ -19,6 +19,9 @@
 		"stats-lite": "*",
 		"@types/jest": "^29.5.10",
 		"jest": "^29.7.0",
-		"open": "^8.0.9"
+		"open": "^8.0.9",
+		"compute-lcm":"^1.1.2",
+		"english2number": "^1.0.8",
+		"lodash":"^4.17.21"
 	}
 }
