@@ -18,6 +18,7 @@
 		"standard": "*",
 		"stats-lite": "*",
 		"@types/jest": "^29.5.10",
-		"jest": "^29.7.0"
+		"jest": "^29.7.0",
+		"open": "^8.0.9"
 	}
 }
