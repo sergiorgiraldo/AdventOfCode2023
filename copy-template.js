@@ -1,4 +1,5 @@
 const path = require("path");
+const open = require("open");
 const { make, position, find, read, write, run } = require("promise-path");
 const fromHere = position(__dirname);
 const report = (...messages) =>
@@ -155,8 +156,10 @@ test("Sanity check", () => {
 	} else {
 		report(`Invalid year (${currentYear}) / day (${currentDay})`);
 	}
-
+	report("Opening puzzle of the day");
 	report("Done.");
+	
+	open(`https://adventofcode.com/${currentYear}/day/${currentDay}`);
 }
 
 module.exports = copyTemplate();
