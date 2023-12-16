@@ -1,7 +1,7 @@
 {
 	"name": "advent-of-code-2023",
 	"logName": "Advent of Code 2023",
-	"version": "15.0.0",
+	"version": "16.0.0",
 	"description": "Advent of Code 2023 using Node JS for Current Year.",
 	"main": "run.js",
 	"scripts": {
@@ -20,8 +20,8 @@
 		"@types/jest": "^29.5.10",
 		"jest": "^29.7.0",
 		"open": "^8.0.9",
-		"compute-lcm":"^1.1.2",
+		"compute-lcm": "^1.1.2",
 		"english2number": "^1.0.8",
-		"lodash":"^4.17.21"
+		"lodash": "^4.17.21"
 	}
 }
