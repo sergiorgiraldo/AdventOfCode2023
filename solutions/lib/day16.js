@@ -1,35 +1,35 @@
 function countEnergizedTilesFromTopLeft(lines) {
 	const entryPoint = { coordinates: { i: 0, j: 0 }, direction: "r" }; //beam enters from the left going right
 	const grid = lines.map((line) => line.split(""));
-
+	
 	const energy = energizeTiles(entryPoint, grid);
 
 	return energy;
 }
 
 function countEnergizedTilesFromAnywhere(lines) {
+	const entryPoints = []; //beam enters from any boundary
 	const grid = lines.map((line) => line.split(""));
-	const entryPoints = [];
 
-	grid.map((row, i) => {
+	grid.map((row, i) => { //left wall
 		entryPoints.push({
 			coordinates: { i: i, j: 0 },
 			direction: "r"
 		});
 
-		entryPoints.push({
+		entryPoints.push({ //right wall
 			coordinates: { i: i, j: row.length - 1 },
 			direction: "l"
 		});
 	});
 
-	grid[0].map((_, j) => {
+	grid[0].map((_, j) => { //top wall
 		entryPoints.push({
 			coordinates: { i: 0, j: j },
 			direction: "d"
 		});
 
-		entryPoints.push({
+		entryPoints.push({ //bottom wall
 			coordinates: { i: grid.length - 1, j: j },
 			direction: "u"
 		});
@@ -44,23 +44,23 @@ function countEnergizedTilesFromAnywhere(lines) {
 
 function energizeTiles(first, grid) {
 	let beams = [first];
-	let visited = {};
+	let energyzed = {};
 
 	while (beams.length) {
 		let newBeams = []; //beams that will be added to the next iteration because original was splitted
-		for (let i = 0; i < beams.length; i++) {
-			const beam = beams[i];
+		for (let index = 0; index < beams.length; index++) {
+			const beam = beams[index];
 			const location = `[${beam.coordinates.i},${beam.coordinates.j}]`;
 
-			if (!visited[location]) {
-				visited[location] = {};
+			if (!energyzed[location]) {
+				energyzed[location] = {};
 			}
-			visited[location][beam.direction] = true;
+			energyzed[location][beam.direction] = true;
 
 			const current = grid[beam.coordinates.i]
 				? grid[beam.coordinates.i][beam.coordinates.j]
 				: null;
-			const nextDirection = getNextDirection(current, beam.direction);
+			const nextDirection = getNextDirections(current, beam.direction);
 
 			for (const direction of nextDirection) {
 				const newBeam = {
@@ -82,7 +82,7 @@ function energizeTiles(first, grid) {
 
 				// already visited going the same direction
 				const newLocation = `[${newBeam.coordinates.i},${newBeam.coordinates.j}]`;
-				if (visited[newLocation] && visited[newLocation][direction]) {
+				if (energyzed[newLocation] && energyzed[newLocation][direction]) {
 					continue;
 				}
 				newBeams.push(newBeam);
@@ -91,10 +91,10 @@ function energizeTiles(first, grid) {
 		beams = newBeams;
 	}
 
-	return Object.keys(visited).length;
+	return Object.keys(energyzed).length;
 }
 
-function getNextDirection(current, direction) {
+function getNextDirections(current, direction) {
 	if (!current) {
 		return [];
 	}
