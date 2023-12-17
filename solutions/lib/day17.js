@@ -52,23 +52,29 @@ function traverseGrid(grid, withConstraint) {
         
 		directions
             .map((d, h) => [d, h, h === ch ? cntSteps + 1 : 1]) // if going in the same direction, increment the steps
+
 			.map(([[dx, dy], ...rest]) => [[currX + dx, currY + dy], ...rest]) // calculate the new positions
+			
 			.filter(([[x, y], h]) => grid[y]?.[x] && (h + 2) % 4 !== ch) // check if the new positions are valid. also, check if crucible back to initial position
+			
 			.filter(([, , steps]) => withConstraint(cntSteps, steps)) // check if the constraint is met
+			
 			.map(([[x, y], h, steps]) => [
 				energy + grid[y][x], // calculate the new energy
 				[x, y],
 				h,
 				steps
 			]) 
+			
 			.filter(
 				([e, [x, y], h, steps]) =>
                     // check which new energies is better than the previous one for each new location visited 
-                    (visited.get(makeKey(x, y, h, steps)) ?? Infinity) > e 
+                    (visited.get(makeKey(x, y, h, steps)) ?? Number.MAX_SAFE_INTEGER) > e 
                     &&
                     // check if the new location was visited before; if not, add it to the visited map
 					visited.set(makeKey(x, y, h, steps), e) 
 			) 
+			
 			.forEach(([e, p, h, steps]) =>
 				helpers.strucutures.MinHeap.push(queue, [
 					e + (destination.x - p[0]) + (destination.y - p[1]),
