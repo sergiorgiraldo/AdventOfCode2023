@@ -1,3 +1,4 @@
+const helpers = require("./helpers");
 function getLavaLagoon(plan) {
 	const lava = buildLavaLagoon(plan, "normal");
 
@@ -64,10 +65,13 @@ function parseInstruction(instruction, lagoonSize) {
 
 /*
 To calculate how many point are inside, use Pick's theorem (https://en.wikipedia.org/wiki/Pick%27s_theorem)
+
     Area = Internal_points + boundary_points/2 - 1
     Internal_points = Area - boundary_points/2 + 1
 
-To calculate the area use the shoelace formula (https://artofproblemsolving.com/wiki/index.php?title=Shoelace_Theorem)
+To calculate the area use the shoelace formula (https://en.wikipedia.org/wiki/Shoelace_formula)
+
+	Area = 1/2 ( ∑(i=1->n) (y_i + y_i+1) * (x_i - x_i+1) )
 */
 function calculateLava(grid, perimeter) {
 	let area = 0;
