@@ -92,6 +92,11 @@ ${links.join("\n")}
 					Strings
 				</a>
 			</li>
+			<li>
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/structures.js">
+					Structures
+				</a>
+			</li>
 		</ul>		
 	<hr />
 	<i>Generated on ${new Date().toUTCString()}</i>
