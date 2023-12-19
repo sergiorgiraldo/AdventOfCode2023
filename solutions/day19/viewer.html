@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Solution Viewer</title>
+  <style>
+    html,
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    pre {
+      border-radius: 0.5em;
+      padding: 0.5em;
+      background: #eee;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    span {
+      text-transform: capitalize;
+      color: darkgreen;
+    }
+
+    a.nav {
+      color: black;
+    }
+
+    a.nav:visited {
+      color: black;
+    }
+
+    a.files {
+      color: indigo;
+      text-decoration: none;
+    }
+
+    a.files:hover {
+      text-decoration: underline;
+    }
+
+    a.files:visited {
+      color: indigo;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+</head>
+
+<body>
+  <a class="nav" href="../">Back to solutions</a>
+
+  <br />
+  
+  <a class="nav" id="puzzle" href="">Puzzle</a>
+
+  <div id="viewer">
+    <h1>
+      Solution Viewer <b><span id="solutionTitle" /></b>
+    </h1>
+
+    <h3>
+      <a class="files" href="./answer.txt">ANSWERS</a>
+    </h3>
+    <pre><code>{{ answerText }}</code></pre>
+
+    <h3>
+      <a class="files" href="../lib/day19.js">lib</a>
+    </h3>
+    <pre><code>{{ libText }}</code></pre>
+    
+    <h3>
+      <a class="files" href="../../__tests__/day19.js">unit tests</a>
+    </h3>
+    <pre><code>{{ unitTestText }}</code></pre>
+
+    <h3>
+      <a class="files" href="./solution.js">solution.js</a>
+    </h3>
+    <pre><code>{{ solutionText }}</code></pre>
+
+    <h3>
+      <a class="files" href="./input.txt">input.txt</a>
+    </h3>
+    <pre><code>{{ inputText }}</code></pre>
+  </div>
+  <script>
+    const viewer = new Vue({
+      el: "#viewer",
+      data: {
+        inputText: "-Loading-",
+        solutionText: "-Loading-",
+        answerText: "-Loading-",
+        libText: "-Loading-",
+        unitTestText: "-Loading-"
+      },
+      mounted() {
+        fetch("./answer.txt")
+          .then(response => response.text())
+          .then((data) => {
+            this.answerText = data;
+          });
+        fetch("./input.txt")
+          .then(response => response.text())
+          .then((response) => {
+            this.inputText = response;
+          });
+        fetch("./solution.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.solutionText = response;
+          });
+        fetch("../lib/day19.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.libText = response;
+          });
+        fetch("../../__tests__/day19.js")
+          .then(response => response.text())
+          .then((response) => {
+            this.unitTestText = response;
+          });
+
+      }
+    });
+    viewer.$mount("#viewer");
+
+    const solutionTitle = (document.location.href + "").split("/").reverse()[1];
+    const solutionDay = solutionTitle.split("day")[1];
+
+    document.getElementById("solutionTitle").innerText = solutionTitle;
+    document.title = solutionTitle;
+    document.getElementById("puzzle").href = "https://adventofcode.com/2023/day/" + solutionDay;
+  </script>
+</body>
+
+</html>
