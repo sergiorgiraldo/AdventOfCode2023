@@ -131,6 +131,10 @@ const lineToPoints = (x1, y1, x2, y2) => {
 	}
 };
 
+const predicate = (v1, operator, v2) => {
+	return operator === "<" ? v1 < v2 : v1 > v2;
+}
+
 module.exports = {
 	leastCommonMultiple,
 	greatestCommonDivisor,
@@ -141,5 +145,6 @@ module.exports = {
 	greatest,
 	between,
 	xor,
-	lineToPoints
+	lineToPoints,
+	predicate
 };
