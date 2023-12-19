@@ -30,7 +30,7 @@ function traverseGrid(grid, withConstraint) {
         [0, 1],   // S
         [-1, 0]   // W
     ];
-    const [E, S] = [1, 2]; //crucible cannot reverse direction	
+    const [E, S] = [1, 2]; //crucible dont reverse, so always go E or S	
     const visited = new Map();
     const destination = {
         x : grid[0].length - 1,
@@ -55,7 +55,7 @@ function traverseGrid(grid, withConstraint) {
 
 			.map(([[dx, dy], ...rest]) => [[currX + dx, currY + dy], ...rest]) // calculate the new positions
 			
-			.filter(([[x, y], h]) => grid[y]?.[x] && (h + 2) % 4 !== ch) // check if the new positions are valid. also, check if crucible back to initial position
+			.filter(([[x, y], h]) => grid[y]?.[x] && (h + 2) % 4 !== ch) // check if inside the grid and not reversing direction
 			
 			.filter(([, , steps]) => withConstraint(cntSteps, steps)) // check if the constraint is met
 			
