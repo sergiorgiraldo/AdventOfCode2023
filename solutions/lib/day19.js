@@ -13,8 +13,8 @@ function getRatingsOfAccepted(lines) {
 			//test if any rule is matched or use default target
 			workflowName =
 				workflow.rules.find((rule) =>
-					helpers.math.predicate(part[rule.attribute], rule.operator, rule.value)
-				)?.target ?? workflow.defaultTarget;
+					helpers.math.predicate(part[rule.attribute], rule.operator,rule.value))?.target ?? 
+					workflow.defaultTarget;
 		}
 
 		if (workflowName === "A") {
@@ -29,14 +29,14 @@ function getRatingsOfAccepted(lines) {
 
 function getCombinations(lines) {
 	const system = describeSystem(lines);
-    const ranges = { x: [1, 4001], m: [1, 4001], a: [1, 4001], s: [1, 4001] };
+	const ranges = { x: [1, 4001], m: [1, 4001], a: [1, 4001], s: [1, 4001] };
 
-    let accepted = [];
+	let accepted = [];
 	checkRatingsInRange(ranges, "in", accepted, system.workflows);
 
 	const totalFromAccepted = accepted
 		.map((batch) =>
-            Object.keys(ranges)
+			Object.keys(ranges)
 				.map((attribute) => batch[attribute][1] - batch[attribute][0])
 				.reduce((acc, curr) => acc * curr, 1)
 		)
@@ -60,44 +60,76 @@ function checkRatingsInRange(batch, workflowName, accepted, workflows) {
 
 		switch (rule.operator) {
 			case "<":
-				if (range[1] <= rule.value) { // entire batch satisfies, go to next workflow
-					checkRatingsInRange(batch, rule.target, accepted, workflows);
+				if (range[1] <= rule.value) {
+					// entire batch satisfies, go to next workflow
+					checkRatingsInRange(
+						batch,
+						rule.target,
+						accepted,
+						workflows
+					);
 
 					return;
-				} 
-                else if (range[0] < rule.value) {  
+				} else if (range[0] < rule.value) {
 					// part of batch satisfies
 					// make sure we have acceptable ranges in the new batch and continue with the rest of the rules
 					// create two new batches using the rule value to split them
 					// e.g. the rule is "< 1351" and the original range was [1, 4001]
 					// then create a batch with range [1, 1351] and another with range [1351, 4001]
 
-					const matchedPart = {...batch, [rule.attribute]: [range[0], rule.value]};
-					checkRatingsInRange(matchedPart, rule.target, accepted, workflows);
+					const matchedPart = {
+						...batch,
+						[rule.attribute]: [range[0], rule.value]
+					};
+					checkRatingsInRange(
+						matchedPart,
+						rule.target,
+						accepted,
+						workflows
+					);
 
-					batch = {...batch, [rule.attribute]: [rule.value, range[1]]};
+					batch = {
+						...batch,
+						[rule.attribute]: [rule.value, range[1]]
+					};
 					continue;
 				}
 				break;
 
 			case ">":
-				if (range[0] > rule.value) { // entire batch satisfies, go to next workflow
-					checkRatingsInRange(batch, rule.target, accepted, workflows);
+				if (range[0] > rule.value) {
+					// entire batch satisfies, go to next workflow
+					checkRatingsInRange(
+						batch,
+						rule.target,
+						accepted,
+						workflows
+					);
 
 					return;
-				} 
-                else if (range[1] > rule.value + 1) { 
+				} else if (range[1] > rule.value + 1) {
 					// part of batch satisfies
 					// make sure we have acceptable ranges in the new batch and continue with the rest of the rules
 					// create two new batch using the rule value to split them
 					// e.g. the rule is "> 1351" and the original range was [1, 4001]
 					// then create a batch with range [1352, 4001] and another with range [1, 1352]
 
-					const matchedPart = {...batch, [rule.attribute]: [rule.value + 1, range[1]]};
+					const matchedPart = {
+						...batch,
+						[rule.attribute]: [rule.value + 1, range[1]]
+					};
 
-					checkRatingsInRange(matchedPart, rule.target, accepted, workflows);
+					checkRatingsInRange(
+						matchedPart,
+						rule.target,
+						accepted,
+						workflows
+					);
 
-					batch = {...batch, [rule.attribute]: [range[0], rule.value + 1]};
+					batch = {
+						...batch,
+						[rule.attribute]: [range[0], rule.value + 1]
+					};
 					continue;
 				}
 				break;
@@ -105,9 +137,9 @@ function checkRatingsInRange(batch, workflowName, accepted, workflows) {
 	}
 
 	//process the default target, it is not handled by the loop above
-    checkRatingsInRange(batch, workflow.defaultTarget, accepted, workflows);
+	checkRatingsInRange(batch, workflow.defaultTarget, accepted, workflows);
 
-    return;
+	return;
 }
 
 function describeSystem(lines) {
@@ -117,7 +149,7 @@ function describeSystem(lines) {
 		const name = /^\w+/.exec(spec)[0];
 
 		//rule is in this format
-		//{attribute from the part, can be x or m or a or s}{operator, < or >}{value as number} 
+		//{attribute from the part, can be x or m or a or s}{operator, < or >}{value as number}
 		//followed by : and then {workflow or A or R}
 		const ruleRegex = /(x|m|a|s)(<|>)(\d+):(\w+)/g;
 		const rules = [...spec.matchAll(ruleRegex)].map((rule) => ({
@@ -153,21 +185,23 @@ function describeSystem(lines) {
 }
 
 function parseRunbook(lines) {
-	let specifications = [];
 	let parts = [];
 	let emptyLineFound = false;
 
-	for (let i = 0; i < lines.length; i++) {
-		if (lines[i] === "") {
-			emptyLineFound = true;
-		} else {
-			if (emptyLineFound) {
-				parts.push(lines[i]);
+	let specifications = lines
+		.map((line) => {
+			if (line === "") {
+				emptyLineFound = true;
+				return null;
+			} else if (emptyLineFound) {
+				parts.push(line);
+				return null;
 			} else {
-				specifications.push(lines[i]);
+				return line;
 			}
-		}
-	}
+		})
+		.filter(Boolean);
+
 	return [specifications, parts];
 }
 
