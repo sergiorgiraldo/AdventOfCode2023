@@ -1,5 +1,16 @@
 # Changelog
 
+## [20.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v19.0.0...v20.0.0) (2023-12-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* day twenty completed
+
+### Features
+
+* day twenty completed ([72fafcd](https://github.com/sergiorgiraldo/AdventOfCode2023/commit/72fafcd342ad4531486ff064aea5794f0be5e3f4))
+
 ## [19.0.0](https://github.com/sergiorgiraldo/AdventOfCode2023/compare/v18.0.0...v19.0.0) (2023-12-19)
 
 
