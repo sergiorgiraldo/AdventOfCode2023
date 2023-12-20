@@ -1,13 +1,10 @@
 function calculateWinningPoints(line) {
-	const parts = line.split(":");
-	const winningGame = parts[1].split("|")[0].trim().split(/\s+/);
-	const myGame = parts[1].split("|")[1].trim().split(/\s+/);
-	let winningPoints = 0;
-    for (card in myGame) {
-        if (winningGame.includes(myGame[card].trim())) {
-            winningPoints = (winningPoints === 0) ? 1 : winningPoints * 2;
-        }
-    }
+    const cards = convertLinesToCards([line])[0]; 
+
+    const included = cards.myNumbers.filter(num => cards.winningNumbers.includes(num));
+
+    const winningPoints = included.some(a=>a)?2 ** (included.length - 1):0;
+
 	return winningPoints;
 }
 

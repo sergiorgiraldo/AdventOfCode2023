@@ -88,7 +88,7 @@ function calculateLava(grid, perimeter) {
 	});
 	
     //boundary points are exactly the same as the perimeter
-    //shoelace formula returns the area multiplied by 2
+    //area above is the shoelace formula multiplied by 2
 	const internalPoints = (area / 2) - (perimeter / 2) + 1;
 
 	//total lava is the sum of internal points and perimeter

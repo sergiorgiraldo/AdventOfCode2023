@@ -49,4 +49,6 @@ const mergeReduced = (objs, reducer, initialValue) => {
 	return merged;
 };
 
-module.exports = { hasProp, mergeReduced };
+const mapValues = require("lodash");
+
+module.exports = { hasProp, mergeReduced, mapValues };
