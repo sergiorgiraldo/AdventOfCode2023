@@ -42,10 +42,11 @@ function emitPulses(lines, cyclesToBeFound) {
 	// This means that bn will only send a low pulse to rx if all of bn's inputs send it a high pulse in the same cycle.
 	// also each of bn's inputs regularly sends a high pulse to it every n cycles, and that each of those cycles
 	// starts at the 0th button press.
-
-	let bnLoops = new Map(
-		Object.keys(Array.from(modules).filter(([key, _]) => key === "bn")[0][1].memory).map(key => [key, null])
-	  );
+	const bnInputs = Array.from(modules).filter(([key, _]) => key === "bn");
+	let bnLoops = new Map();
+	if (bnInputs.length > 0) {
+		bnLoops = new Map(Object.keys(bnInputs[0][1].memory).map(key => [key, null]));
+	}
 
 	let bnSenders = [];
 	bnLoops.forEach((_, k) => bnSenders.push(k));
