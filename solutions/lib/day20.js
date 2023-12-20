@@ -44,8 +44,7 @@ function emitPulses(lines, cyclesToBeFound) {
 	// starts at the 0th button press.
 
 	let bnLoops = new Map(
-		Object.keys(Array.from(modules).filter(([key, _]) => key === "bn")[0][1].memory)
-		.map(key => [key, null])
+		Object.keys(Array.from(modules).filter(([key, _]) => key === "bn")[0][1].memory).map(key => [key, null])
 	  );
 
 	let bnSenders = [];
