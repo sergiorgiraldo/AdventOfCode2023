@@ -1,11 +1,23 @@
 const helpers = require("./helpers");
 
 function emit1000Pulses(lines) {
-	return emitPulses(lines, 1000);
+	const [modules, _] = emitPulses(lines, 1000);
+
+	let totalLow = 1000; // every button push sends a low pulse in the beginning
+	let totalHigh = 0;
+
+	modules.forEach((module) => {
+		totalLow += module.lowPulsesSent;
+		totalHigh += module.highPulsesSent;
+	});
+
+	return totalLow * totalHigh;
 }
 
 function emitPulsesUntilCyclesFound(lines) {
-	return emitPulses(lines, Number.MAX_SAFE_INTEGER, true);
+	const [_, cycles] = emitPulses(lines, Number.MAX_SAFE_INTEGER, true);
+
+	return helpers.math.leastCommonMultiple(cycles);
 }
 
 function emitPulses(lines, limit, cyclesToBeFound = false) {
@@ -23,17 +35,6 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 
 	const queue = [];
 
-	const addToQueue = (pulse, destinationName, sender) => {
-		if (sender != null) {
-			pulse === "high" ? sender.highPulsesSent++ : sender.lowPulsesSent++;
-		}
-		queue.unshift({
-			pulse: pulse,
-			module: modules.get(destinationName),
-			sender: sender?.label ?? ""
-		});
-	};
-
 	// there is only one module which can send a pulse to module rx, and that's module bn.
 	// Module bn is a conjunction module, so it will only send a low pulse to rx when it has received a high pulse from all its inputs.
 	// looking into button cycles (uncomment console.log statement below), i see that on cycles where one of
@@ -41,7 +42,6 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 	// This means that bn will only send a low pulse to rx if all of bn's inputs send it a high pulse in the same cycle.
 	// also each of bn's inputs regularly sends a high pulse to it every n cycles, and that each of those cycles
 	// starts at the 0th button press.
-	// Keep track of what n is for each input.
 	const bnLoops = helpers.objetcs.mapValues(
 		modules.get("bn")?.memory,
 		() => null
@@ -49,10 +49,12 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 	let bnSenders = [];
 	bnLoops.forEach((_, k) => bnSenders.push(k));
 	let buttonPresses = 0;
+	let cycles = [];
 
 	const pushButton = () => {
 		buttonPresses++;
-		addToQueue("low", "broadcaster");
+		
+		addToQueue(modules, queue, "low", "broadcaster");
 
 		// process the queue
 		while (queue.length > 0) {
@@ -63,12 +65,12 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 
 			if (item.module.type === "broadcaster") {
 				item.module.destinations.forEach((d) =>
-					addToQueue("low", d, item.module)
+					addToQueue(modules, queue, "low", d, item.module)
 				);
 			} else if (item.module.type === "%" && item.pulse === "low") { // % flip-flops only send a pulse when receive a low pulse
 				item.module.state = !item.module.state;
 				item.module.destinations.forEach((d) =>
-					addToQueue(item.module.state ? "high" : "low", d, item.module)
+					addToQueue(modules, queue, item.module.state ? "high" : "low", d, item.module)
 				);
 			} else if (item.module.type === "&") {
 				if (cyclesToBeFound) {
@@ -81,11 +83,15 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 				}
 				// remember the state of the input
 				item.module.memory[item.sender] = (item.pulse === "high");
+				
+				//if high pulses for all inputs, send a low pulse, ootherwise send a high pulse
+				//const pulseToSend = !Object.values(item.module.memory).every((p) => p);
 				const pulseToSend = !Object.values(item.module.memory).every((p) => p);
+
 				// console.log( `${item.module.type}${item.module.label} with pulse ${pulseToSend?"high":"low"} to `, item.module.destinations );
 
 				item.module.destinations.forEach((d) =>
-					addToQueue(pulseToSend ? "high" : "low", d, item.module)
+					addToQueue(modules, queue, pulseToSend ? "high" : "low", d, item.module)
 				);
 			}
 		}
@@ -95,26 +101,28 @@ function emitPulses(lines, limit, cyclesToBeFound = false) {
 		pushButton();
 
 		if (cyclesToBeFound) {
-			const allSentHighPulse =
-				bnSenders.filter((sender) => bnLoops[sender] != null).length === bnSenders.length;
+			const allSentHighPulse = bnSenders.filter((sender) => bnLoops[sender] != null).length === bnSenders.length;
 
 			if (allSentHighPulse) {
-				const cycles = bnSenders.map((sender) => parseInt(bnLoops[sender], 10));
-				return helpers.math.leastCommonMultiple(cycles);
+				cycles = bnSenders.map((sender) => parseInt(bnLoops[sender], 10));
+				break;
 			}
 		}
 	}
 
-	//part1
-	let totalLow = 1000; // every button push sends a low pulse in the beginning
-	let totalHigh = 0;
-
-	modules.forEach((module) => {
-		totalLow += module.lowPulsesSent;
-		totalHigh += module.highPulsesSent;
-	});
-	return totalLow * totalHigh;
+	return [modules, cycles];
 }
+
+function addToQueue(modules, queue, pulse, destinationName, sender) {
+	if (sender != null) {
+		pulse === "high" ? sender.highPulsesSent++ : sender.lowPulsesSent++;
+	}
+	queue.unshift({
+		pulse: pulse,
+		module: modules.get(destinationName),
+		sender: sender?.label ?? ""
+	});
+};
 
 function buildConfiguration(lines) {
 	const modules = lines.map((line) => {

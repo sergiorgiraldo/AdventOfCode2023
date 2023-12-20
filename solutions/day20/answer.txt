@@ -1,2 +1,2 @@
-["Solution 1:",825167435," Execution time: 29 ms"]
-["Solution 2:",225514321828633," Execution time: 79 ms"]
+["Solution 1:",825167435," Execution time: 20 ms"]
+["Solution 2:",225514321828633," Execution time: 68 ms"]
