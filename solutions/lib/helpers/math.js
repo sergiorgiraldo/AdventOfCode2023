@@ -135,6 +135,22 @@ const predicate = (v1, operator, v2) => {
 	return operator === "<" ? v1 < v2 : v1 > v2;
 }
 
+/**
+ * Lagrange's Interpolation formula for ax^2 + bx + c with x=[0,1,2] and y=[y0,y1,y2] we have
+ *   f(x) = (x^2-3x+2) * y0/2 - (x^2-2x)*y1 + (x^2-x) * y2/2
+ * so the coefficients are:
+ * a = y0/2 - y1 + y2/2
+ * b = -3*y0/2 + 2*y1 - y2/2
+ * c = y0
+ */
+const simplifiedLagrange = (values) => {
+	return {
+	  a: values[0] / 2 - values[1] + values[2] / 2,
+	  b: -3 * (values[0] / 2) + 2 * values[1] - values[2] / 2,
+	  c: values[0],
+	};
+  };
+
 module.exports = {
 	leastCommonMultiple,
 	greatestCommonDivisor,
@@ -146,5 +162,6 @@ module.exports = {
 	between,
 	xor,
 	lineToPoints,
-	predicate
+	predicate,
+	simplifiedLagrange
 };
