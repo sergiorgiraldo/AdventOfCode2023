@@ -35,6 +35,7 @@ function emitPulses(lines, cyclesToBeFound) {
 
 	let queue = [];
 
+	//first idea for part2 was brute force but it halted my computer :D so ...
 	// there is only one module which can send a pulse to module rx, and that's module bn.
 	// Module bn is a conjunction module, so it will only send a low pulse to rx when it has received a high pulse from all its inputs.
 	// looking into button cycles (uncomment console.log statement below), i see that on cycles where one of
@@ -88,15 +89,17 @@ function pushButton(modules, queue, bnLoops, buttonPresses) {
 		}
 
 		if (item.module.type === "broadcaster") {
-			item.module.destinations.forEach((d) =>
-				addToQueue(modules, queue, "low", d, item.module)
+			item.module.destinations.forEach((destination) =>
+				addToQueue(modules, queue, "low", destination, item.module)
 			);
-		} else if (item.module.type === "%" && item.pulse === "low") { // % flip-flops only send a pulse when receive a low pulse
+		} 
+		else if (item.module.type === "%" && item.pulse === "low") { // % flip-flops only send a pulse when receive a low pulse
 			item.module.state = !item.module.state;
-			item.module.destinations.forEach((d) =>
-				addToQueue(modules, queue, item.module.state ? "high" : "low", d, item.module)
+			item.module.destinations.forEach((destination) =>
+				addToQueue(modules, queue, item.module.state ? "high" : "low", destination, item.module)
 			);
-		} else if (item.module.type === "&") {
+		} 
+		else if (item.module.type === "&") {
 			if (item.module.label === "bn") {
 				// for the first time that one of bn's inputs sends a high pulse, record the cycle length
 				if (bnLoops[item.sender] == null && item.pulse === "high") {
@@ -106,14 +109,13 @@ function pushButton(modules, queue, bnLoops, buttonPresses) {
 			// remember the state of the input
 			item.module.memory[item.sender] = (item.pulse === "high");
 			
-			//if high pulses for all inputs, send a low pulse, ootherwise send a high pulse
-			//const pulseToSend = !Object.values(item.module.memory).every((p) => p);
+			//if high pulses from all inputs, send a low pulse, otherwise send a high pulse
 			const pulseToSend = !Object.values(item.module.memory).every((p) => p);
 
 			// console.log( `${item.module.type}${item.module.label} with pulse ${pulseToSend?"high":"low"} to `, item.module.destinations );
 
-			item.module.destinations.forEach((d) =>
-				addToQueue(modules, queue, pulseToSend ? "high" : "low", d, item.module)
+			item.module.destinations.forEach((destination) =>
+				addToQueue(modules, queue, pulseToSend ? "high" : "low", destination, item.module)
 			);
 		}
 	}
