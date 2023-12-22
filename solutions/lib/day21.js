@@ -33,43 +33,15 @@ function debug(map) {
 	//WRONG, i thought i could get the multiple from 131 and it was not correct
 	//after pulling my hair off, i figured it out: I am iterating only over the original map,
 	//not over the infinite map
+	//what happened is that my original algorithm was checking for out-of-bounds and ofc this does not occur in 
+	//a infinite map. I then rewrote and the logs above, when plotted, hinted a quadratic function. 
 }
 
-function debug2(map) {
-	const repeatedArr = [];
 
-	// replicate the array vertically
-	for (let i = 0; i < 3; i++) {
-		repeatedArr.push(...map);
-	}
 
-	// replicate the array horizontally
-	for (let i = 0; i < repeatedArr.length; i++) {
-		repeatedArr[i] = repeatedArr[i]
-			.concat(...repeatedArr[i].slice())
-			.concat(...repeatedArr[i].slice());
-	}
-
-	// replace "S" with "X" in the replicated array
-	for (let i = 0; i < repeatedArr.length; i++) {
-		for (let j = 0; j < repeatedArr[i].length; j++) {
-			if (repeatedArr[i][j] === "S") {
-				repeatedArr[i][j] = ".";
-			}
-		}
-	}
-
-	const centerI = Math.floor(repeatedArr.length / 2);
-	const centerJ = Math.floor(repeatedArr[0].length / 2);
-	repeatedArr[centerI][centerJ] = "S";
-
-	console.log("65", walkTheMap(repeatedArr, 65)); //3832
-	console.log("65+131", walkTheMap(repeatedArr, 65 + 131)); //33967
-	console.log("65+131*2", walkTheMap(repeatedArr, 65 + 131 * 2)); //63740
-	console.log("65+131*3", walkTheMap(repeatedArr, 65 + 131 * 3)); //67365
-	console.log("65+131*4", walkTheMap(repeatedArr, 65 + 131 * 4)); //67428
-	//plotted and this give a quadratic feeling
-}
+function getCoordinates(i, j){
+	return `${i} , ${j}`;
+};
 
 function buildMap(lines) {
 	const map = lines.map((line) => line.split(""));
@@ -77,19 +49,15 @@ function buildMap(lines) {
 	return map;
 }
 
-function getCoordinates(i, j){
-	return `${i},${j}`;
-};
-
 function parse(map){
-	const walls = {};
+	const rocks = {};
 	const plots = {};
 	let start = { i: 0, j: 0 };
 	for (let i = 0; i < map.length; i++) {
 		for (let j = 0; j < map[i].length; j++) {
 			const value = map[i][j];
 			if (value == "#") {
-				walls[getCoordinates(i, j)] = true;
+				rocks[getCoordinates(i, j)] = true;
 			}
 			if (value == "S") {
 				plots[getCoordinates(i, j)] = -1;
@@ -98,16 +66,26 @@ function parse(map){
 		}
 	}
 	return {
-		walls: walls,
+		rocks: rocks,
 		plots: plots,
 		start: start,
 		size: map.length
 	};
 };
 
+//this is what solved part 2, instead of ignoring out-of-bounds, wrap them :)
+/*
+test cases
+coords>>> 131 , 65  wrapped>>> 0 , 65
+coords>>> -1 , 65  wrapped>>> 130 , 65
+coords>>> 65 , 131  wrapped>>> 65 , 0
+coords>>> 65 , -1  wrapped>>> 65 , 130
+coords>>> 132 , 65  wrapped>>> 1 , 65
+*/
 function wrapped (i, j, size){
 	i %= size;
 	j %= size;
+
 	return {
 		wi: i >= 0 ? i : size + i,
 		wj: j >= 0 ? j : size + j
@@ -118,8 +96,8 @@ function getNextSteps(grid, i, j, remaining) {
 	const coords = getCoordinates(i, j);
 	const { wi, wj } = wrapped(i, j, grid.size);
 	const wk = getCoordinates(wi, wj);
-
-	if (grid.walls[wk] || grid.plots[coords] >= remaining) {
+	
+	if (grid.rocks[wk] || grid.plots[coords] >= remaining) {
 		return [];
 	}
 	grid.plots[coords] = remaining;
@@ -150,5 +128,70 @@ function walkTheMap (map, steps = 64){
 	}
 	return Object.values(grid.plots).filter((e) => e % 2 == 0).length;
 };
+
+/*
+//My original solution (that worked flawlessly for part 1)
+
+function getStartingPoint(map) {
+	const startingPoint = {};
+	const startingPointChar = "S";
+	for (let y = 0; y < map.length; y++) {
+		for (let x = 0; x < map[y].length; x++) {
+			if (map[y][x] === startingPointChar) {
+				startingPoint.x = x;
+				startingPoint.y = y;
+				break;
+			}
+		}
+	}
+
+	return startingPoint;
+}
+
+function walkTheMap(map, steps) {
+	const startingPoint = getStartingPoint(map);
+	let positions = {};
+
+	positions[startingPoint.y + "," + startingPoint.x] = true;
+
+	for (let i = 1; i <= steps; i++) {
+		let newPositions = {};
+
+		for (let position in positions) {
+			const newCoordinates = moveAroundTheMap(map, position);
+
+			newCoordinates.forEach((coord) => {
+				if (map[coord.y][coord.x] != "#") {
+					newPositions[coord.y + "," + coord.x] = true;
+				}
+			});
+		}
+
+		positions = newPositions;
+	}
+	return Object.keys(positions).length;
+}
+
+function moveAroundTheMap(map, position) {
+	let newCoordinates = [];
+
+	const [y, x] = position.split(",").map((val) => parseInt(val, 10));
+
+	if (y - 1 >= 0) {
+		newCoordinates.push({ y: y - 1, x: x });
+	}
+	if (y + 1 < map.length) {
+		newCoordinates.push({ y: y + 1, x: x });
+	}
+	if (x - 1 >= 0) {
+		newCoordinates.push({ y: y, x: x - 1 });
+	}
+	if (x + 1 < map[0].length) {
+		newCoordinates.push({ y: y, x: x + 1 });
+	}
+
+	return newCoordinates;
+}
+*/
 
 module.exports = { getPositionsAfterWalking, getPositionsInInfiniteMap };
