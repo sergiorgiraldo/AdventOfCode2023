@@ -61,20 +61,35 @@ function fall(boxes, fallen) {
 
 		let canFall = true;
 
+		/*
+
+other[0][0] v              v other[1][0] v
+		    ================
+		                    ================ <- box can fall, condition other[1][0] >= x, iterate over x
+	
+
+	other[0][0] v              v other[1][0] 
+				================
+================ <- box can fall, condition other[0][0] <= x, iterate over x
+
+same rules apply to y and z
+
+		*/
+
 		while (canFall && z > 1) {
 			z--;
 			for (let x = box[0][0]; x <= box[1][0]; x++)
 				for (let y = box[0][1]; y <= box[1][1]; y++) {
 					if (
 						boxes.filter(
-							(o, j) =>
-								i !== j &&
-								o[0][0] <= x &&
-								o[1][0] >= x &&
-								o[0][1] <= y &&
-								o[1][1] >= y &&
-								o[0][2] <= z &&
-								o[1][2] >= z
+							(other, j) =>
+								i !== j && //not the same box
+								other[0][0] <= x &&
+								other[1][0] >= x &&
+								other[0][1] <= y &&
+								other[1][1] >= y &&
+								other[0][2] <= z &&
+								other[1][2] >= z
 						).length != 0
 					) {
 						canFall = false;
