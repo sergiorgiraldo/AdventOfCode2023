@@ -10,42 +10,50 @@ i took a shortcut (pun intended) and used a npm library
 */
 
 function getGroupsAfter3WiresDisconnected(lines) {
-	const connections = [];
-	const connectionsMap = new Map();
+	const [initialGraph, connections] = buildInitialGraph(lines);
+
+	for (const [component1, component2] of mincut(initialGraph)) {
+		cutConnection(connections, component1, component2);
+	}
+
+	const partitionedGraph = buildPartitionedGraph(connections);
+
+	return partitionedGraph[0].length * partitionedGraph[1].length;
+}
+
+function buildInitialGraph(lines){
+	const graph = []; //vertex
+	const connections = new Map(); //connections among vertex 
 
 	lines.forEach((line) => {
 		const [component, connectedComponentsString] = line.split(": ");
 		let connectedComponents = connectedComponentsString.split(" ");
 
-		if (!connectionsMap.has(component)) {
-			connectionsMap.set(component, connectedComponents);
-		} else {
-			connectionsMap.get(component).push(...connectedComponents);
+		if (!connections.has(component)) {
+			connections.set(component, connectedComponents);
+		} 
+		else {
+			connections.get(component).push(...connectedComponents);
 		}
 
 		for (const connectedComponent of connectedComponents) {
-			connections.push([component, connectedComponent]);
+			graph.push([component, connectedComponent]);
 
-			if (!connectionsMap.has(connectedComponent))
-				connectionsMap.set(connectedComponent, []);
-
-			const alreadyConnectedComponents =
-				connectionsMap.get(connectedComponent);
-
-			alreadyConnectedComponents.push(component);
+			//update map
+			if (connections.has(connectedComponent)){
+				const existingConnectedComponents = connections.get(connectedComponent);
+				existingConnectedComponents.push(component);
+			}
+			else{
+				connections.set(connectedComponent, [component]);
+			}
 		}
 	});
 
-	for (const [component1, component2] of mincut(connections)) {
-		cutConnection(connectionsMap, component1, component2);
-	}
-
-	const graph = buildGraph(connectionsMap);
-
-	return graph[0].length * graph[1].length;
+	return [graph, connections];
 }
 
-function buildGraph(connections) {
+function buildPartitionedGraph(connections) {
 	const graph = [];
 	const visited = new Set();
 
