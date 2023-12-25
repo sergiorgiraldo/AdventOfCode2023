@@ -37,7 +37,11 @@ function solveForFirstStar() {
 	});
 
 	readInterface.on("close", function () {
-		const result = lib.getIntersections(lines, 200_000_000_000_000, 400_000_000_000_000);
+		const result = lib.getIntersections(
+			lines,
+			200_000_000_000_000,
+			400_000_000_000_000
+		);
 		const end = Date.now();
 		report("Solution 1:", result, ` Execution time: ${end - start} ms`);
 	});
@@ -56,8 +60,9 @@ function solveForSecondStar() {
 		lines.push(line);
 	});
 
-	readInterface.on("close", function () {
-		const result = 0;
+	readInterface.on("close", async function () {
+		let result;
+		await lib.obliterateHailstonesWithRock(lines).then((v)=>result = v);
 		const end = Date.now();
 		report("Solution 2:", result, ` Execution time: ${end - start} ms`);
 	});
