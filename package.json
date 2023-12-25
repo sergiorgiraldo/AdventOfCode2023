@@ -1,7 +1,7 @@
 {
 	"name": "advent-of-code-2023",
 	"logName": "Advent of Code 2023",
-	"version": "24.0.0",
+	"version": "25.0.0",
 	"description": "Advent of Code 2023 using Node JS for Current Year.",
 	"main": "run.js",
 	"scripts": {
@@ -25,6 +25,6 @@
 		"lodash": "^4.17.21",
 		"z3-solver": "^4.12.4",
 		"@graph-algorithm/minimum-cut": "^2.0.0",
-		"regenerator-runtime": "^0.14.1" 
+		"regenerator-runtime": "^0.14.1"
 	}
 }
