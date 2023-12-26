@@ -80,8 +80,16 @@ async function copyTemplate() {
 `
 const lib = require('../solutions/lib/${newFolderName}');
 
-test("Sanity check", () => {
-	expect(true).toBe(true);
+test("SolveFirstStar", () => {
+	let lines = [];
+
+	expect(lib.solveForFirstStar(lines)).toBe(-1);
+});
+
+test("SolveSecondStar", () => {
+	let lines = [];
+	
+	expect(lib.solveForSecondStar(lines)).toBe(-2);
 });
 `
 	);
@@ -92,7 +100,22 @@ test("Sanity check", () => {
 
 	const libsPath = fromHere(`solutions/lib/${newFolderName}.js`);
 	report("Creating:", libsPath);
-	write(libsPath, `module.exports = { };`);
+	write(
+		libsPath,
+`
+const helpers = require("./helpers");
+
+function solveForFirstStar(lines){
+	return 0;
+}
+
+function solveForSecondStar(lines){
+	return 0;
+}
+
+module.exports = { solveForFirstStar, solveForSecondStar };
+`
+	);
 
 	const solutionsJsPath = fromHere(`solutions/${newFolderName}/solution.js`);
 	fs.readFile(solutionsJsPath, "utf8", (err, data) => {

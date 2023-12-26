@@ -1,10 +1,10 @@
 const path = require("path");
 const { position } = require("promise-path");
-const readline = require("readline");
 const fs = require("fs");
 const fromHere = position(__dirname);
+
 fs.unlinkSync(path.join(__dirname, "answer.txt"));
-var streamAnswer = fs.createWriteStream(path.join(__dirname, "answer.txt"), {
+let streamAnswer = fs.createWriteStream(path.join(__dirname, "answer.txt"), {
 	flags: "a"
 });
 const report = (...messages) => {
@@ -18,43 +18,34 @@ const report = (...messages) => {
 };
 const lib = require("../lib/dayTODO");
 
-function run() {
-	solveForFirstStar();
-	solveForSecondStar();
+async function run() {
+	const filePath = path.join(__dirname, "input.txt");
+	const lines = fs.readFileSync(filePath).toString().split("\n").slice(0, -1);
+
+	await solveForFirstStar(lines);
+	await solveForSecondStar(lines);
+
+	exit(0);
 }
 
-function solveForFirstStar() {
+async function solveForFirstStar(lines) {
 	const start = Date.now();
-	const filePath = path.join(__dirname, "input.txt");
-	const readInterface = readline.createInterface({
-		input: fs.createReadStream(filePath)
-	});
 
-	let result = 0;
+	let result = await lib.solveForFirstStar(lines);
 
-	readInterface.on("line", function (line) {});
+	const end = Date.now();
 
-	readInterface.on("close", function () {
-		const end = Date.now();
-		report("Solution 1:", result, ` Execution time: ${end - start} ms`);
-	});
+	report("Solution 1:", result, ` Execution time: ${end - start} ms`);
 }
 
-function solveForSecondStar() {
+async function solveForSecondStar(lines) {
 	const start = Date.now();
-	const filePath = path.join(__dirname, "input.txt");
-	const readInterface = readline.createInterface({
-		input: fs.createReadStream(filePath)
-	});
 
-	let result = 0;
+	let result = await lib.solveForSecondStar(lines);
 
-	readInterface.on("line", function (line) {});
+	const end = Date.now();
 
-	readInterface.on("close", function () {
-		const end = Date.now();
-		report("Solution 2:", result, ` Execution time: ${end - start} ms`);
-	});
+	report("Solution 2:", result, ` Execution time: ${end - start} ms`);
 }
 
 run();
