@@ -72,27 +72,20 @@ equations were:
 async function obliterateHailstonesWithRock(lines) {
 	const charts = buildChart(lines);
 
-	let Context;
-	
-	await init().then((result) => {
-		({ Context } = result);
-	});
-
-	const Z3 = Context("main");
-
-	const x = Z3.Real.const("x");
-	const y = Z3.Real.const("y");
-	const z = Z3.Real.const("z");
-
-	const vx = Z3.Real.const("vx");
-	const vy = Z3.Real.const("vy");
-	const vz = Z3.Real.const("vz");
-
-	const solver = new Z3.Solver();
+	const { Context } = await init();
+	const { Solver, Real } = Context("main");
+	const x = Real.const("x");
+	const y = Real.const("y");
+	const z = Real.const("z");
+	const vx = Real.const("vx");
+	const vy = Real.const("vy");
+	const vz = Real.const("vz");
+	const solver = new Solver();
 
 	for (let i = 0; i < charts.length; i++) {
 		const stone = charts[i];
-		const t = Z3.Real.const(`t${i}`);
+
+		const t = Real.const(`t${i}`);
 
 		solver.add(t.ge(0));
 		solver.add(x.add(vx.mul(t)).eq(t.mul(stone[3]).add(stone[0])));
@@ -100,15 +93,14 @@ async function obliterateHailstonesWithRock(lines) {
 		solver.add(z.add(vz.mul(t)).eq(t.mul(stone[5]).add(stone[2])));
 	}
 
-	let rx,ry,rz;
+	let rx= 0,ry= 0,rz= 0;
 
-	await solver.check().then(() => {
+	if ((await solver.check()) === 'sat') {
 		const model = solver.model();
 		rx = Number(model.eval(x));
 		ry = Number(model.eval(y));
 		rz = Number(model.eval(z));
-		return;
-	});
+	};
 
 	return rx + ry + rz;
 }
