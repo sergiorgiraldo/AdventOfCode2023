@@ -8,6 +8,10 @@ https://adventofcode.com/2023/
 
 https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
 
+## Performance
+
+<!--- advent_readme_stars table --->
+
 ## Development
 
 To run a solution by day, use:
