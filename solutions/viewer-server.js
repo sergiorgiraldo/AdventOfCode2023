@@ -1,5 +1,4 @@
 const path = require("path");
-// const express = require("express");
 const { position, find, write } = require("promise-path");
 const fromHere = position(__dirname);
 const report = (...messages) =>
@@ -12,7 +11,9 @@ const report = (...messages) =>
 		...messages
 	);
 
-// const app = express();
+const currentPath = fromHere("/");
+const currentFolder = currentPath.split("/").reverse()[2];
+const currentYear = currentFolder.slice(-4);
 const packageData = require("../package.json");
 
 async function generateIndexHTML() {
@@ -27,7 +28,7 @@ async function generateIndexHTML() {
 		})
 		.map((solution) => {
 			const folder = solution.substr(fromHere("../").length);
-			return `      <li><a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/${folder}/viewer.html">${
+			return `      <li><a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/${folder}/viewer.html">${
 				folder.split("/")[1]
 			}</a></li>`;
 		});
@@ -58,42 +59,42 @@ ${links.join("\n")}
 		<h2>Libs</h2>
 		<ul>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers.js">
 					Helpers
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/arrays.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/arrays.js">
 					Arrays
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/dates.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/dates.js">
 					Dates
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/math.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/math.js">
 					Math
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/objects.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/objects.js">
 					Objects
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/processes.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/processes.js">
 					Processes
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/strings.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/strings.js">
 					Strings
 				</a>
 			</li>
 			<li>
-				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/lib/helpers/structures.js">
+				<a class="days" href="https://sergiorgiraldo.github.io/AdventOfCode${currentYear}/solutions/lib/helpers/structures.js">
 					Structures
 				</a>
 			</li>
@@ -110,18 +111,4 @@ ${links.join("\n")}
 	return html;
 }
 
-// app.use("/solutions", express.static(fromHere("")));
-
-// app.get("/", async (req, res) => {
-// 	const html = await generateIndexHTML();
-// 	res.send(html);
-// });
-
-// const port = 8080;
-// app.listen(port, () => report(`Listening on http://localhost:${port}/`));
-
 generateIndexHTML();
-
-report(
-	"Push to main and go to https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/"
-);
