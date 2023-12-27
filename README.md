@@ -26,6 +26,18 @@ to run test by day, use:
 or run all tests:
 `npm test`
 
+## Setup
+
+1. Enable github pages: repo settings > pages > deploy from branch main, root
+2. Configure release-please workflow
+3. Configure "update stars in readme" workflow
+  a. create a PAT with repo permissions and store in secrets (GH_PAT_AOCYYYY, replace YYYY with year from advent)
+  b. change the year in the workflow
+  c. double-check the aoc userid and session
+  d. hints in the pages:
+   - https://www.adebayosegun.com/blog/push-to-protected-branch-gh-action
+   - https://github.com/marketplace/actions/aoc-badges     
+
 ## Based in 
 
 https://github.com/johnbeech/advent-of-code-nodejs-template
