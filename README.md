@@ -10,7 +10,9 @@ https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
 
 ## Performance
 
-<!--- advent_readme_stars table --->
+![](https://img.shields.io/badge/day%20📅-22-blue)
+ 
+![](https://img.shields.io/badge/stars%20⭐-34-yellow)
 
 ## Development
 
