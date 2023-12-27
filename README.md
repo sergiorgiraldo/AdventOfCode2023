@@ -14,17 +14,19 @@ https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
  
 ![](https://img.shields.io/badge/stars%20⭐-50-yellow)
 
-## Development
+## Usage
 
-To run a solution by day, use:
-`npm start day2`
+ - To run a solution by day, use: `npm start day2`
 
-If it is a new day, it will generate the folder for the day based on the template, also download the input using AOCD (https://github.com/wimglenn/advent-of-code-data)
+    - If it is a new day, it will generate the folder for the day based on the template, also download the input using AOCD (https://github.com/wimglenn/advent-of-code-data)
 
-to run test by day, use:
-`npm test day2`
-or run all tests:
-`npm test`
+- To run test by day, use: `npm test day2`
+
+- To submit answers, use: `npm run submit [1..25] [1|2]`
+
+  - `npm run submit 15 1`, part 1 of day 15
+
+  - `npm run submit 15 2`, part 2 of day 15
 
 ## Setup
 
