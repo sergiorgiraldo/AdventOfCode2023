@@ -25,7 +25,7 @@ async function run() {
 	await solveForFirstStar(lines);
 	await solveForSecondStar(lines);
 
-	exit(0);
+	process.exit(0);
 }
 
 async function solveForFirstStar(lines) {
