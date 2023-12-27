@@ -18,30 +18,28 @@ const report = (...messages) => {
 };
 const lib = require("../lib/dayTODO");
 
-async function run() {
+ function run() {
 	const filePath = path.join(__dirname, "input.txt");
 	const lines = fs.readFileSync(filePath).toString().split("\n").slice(0, -1);
 
-	await solveForFirstStar(lines);
-	await solveForSecondStar(lines);
-
-	process.exit(0);
+	 solveForFirstStar(lines);
+	 solveForSecondStar(lines);
 }
 
-async function solveForFirstStar(lines) {
+ function solveForFirstStar(lines) {
 	const start = Date.now();
 
-	let result = await lib.solveForFirstStar(lines);
+	let result =  lib.solveForFirstStar(lines);
 
 	const end = Date.now();
 
 	report("Solution 1:", result, ` Execution time: ${end - start} ms`);
 }
 
-async function solveForSecondStar(lines) {
+ function solveForSecondStar(lines) {
 	const start = Date.now();
 
-	let result = await lib.solveForSecondStar(lines);
+	let result =  lib.solveForSecondStar(lines);
 
 	const end = Date.now();
 
