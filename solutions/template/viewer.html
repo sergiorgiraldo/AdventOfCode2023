@@ -125,10 +125,10 @@
 
     const solutionTitle = (document.location.href + "").split("/").reverse()[1];
     const solutionDay = solutionTitle.split("day")[1];
-
+    const yearOfChallenge = (document.location.href + "").split("/").reverse()[3].split("AdventOfCode")[1];
     document.getElementById("solutionTitle").innerText = solutionTitle;
     document.title = solutionTitle;
-    document.getElementById("puzzle").href = "https://adventofcode.com/2023/day/" + solutionDay;
+    document.getElementById("puzzle").href = `https://adventofcode.com/${yearOfChallenge}/day/${solutionDay}`;
   </script>
 </body>
 

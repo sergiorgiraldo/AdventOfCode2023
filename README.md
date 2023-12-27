@@ -32,7 +32,7 @@ https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
 
 1. Enable github pages: repo settings > pages > deploy from branch main, root
 2. Configure release-please workflow
-  a. Chamge the year   
+  a. Change the year   
 3. Configure "update stars in readme" workflow
   a. create a PAT with repo permissions and store in secrets (GH_PAT_AOCYYYY, replace YYYY with year from advent), update the name in the chekcout step
   b. change the year in the workflow
@@ -42,9 +42,7 @@ https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
    - https://github.com/marketplace/actions/aoc-badges
 4. Change the year in package.json and set version to 0.0.0
 5. Change the year in the readme
-6. Change year in templates (template/solution.js,viewer.html)
-7. Chanhe year in viewer-server.js
-8. Chnage ITERATION to 0.0.1
+6. Change ITERATION to 0.0.1
 
 ## Based in 
 
