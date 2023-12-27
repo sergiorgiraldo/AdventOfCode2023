@@ -34,7 +34,7 @@ https://sergiorgiraldo.github.io/AdventOfCode2023/solutions/
 2. Configure release-please workflow
   a. Chamge the year   
 3. Configure "update stars in readme" workflow
-  a. create a PAT with repo permissions and store in secrets (GH_PAT_AOCYYYY, replace YYYY with year from advent)
+  a. create a PAT with repo permissions and store in secrets (GH_PAT_AOCYYYY, replace YYYY with year from advent), update the name in the chekcout step
   b. change the year in the workflow
   c. double-check the aoc userid and session
   d. hints in the pages:
