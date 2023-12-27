@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2                # clones your repo
-          
+        with:
+          token: ${{ secrets.GH_PAT_AOC2023 }}
       - uses: joblo2213/aoc-badges-action@v3
         with:
           userid: 2877886                          # your user id, see setup on how to obtain
