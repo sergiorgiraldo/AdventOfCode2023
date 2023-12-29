@@ -408,6 +408,7 @@ const determinant = (m) =>
 						),
 				0
 		  );
+const intersect = (a, b) => a.filter((v) => b.includes(v));
 
 module.exports = {
 	count,
@@ -432,5 +433,6 @@ module.exports = {
 	eachLeft,
 	matrixToString,
 	stringToMatrix,
-	determinant
+	determinant,
+	intersect
 };
