@@ -18,12 +18,21 @@ const submit = async () => {
 	const answersContent = fs.readFileSync(answerPath).toString();
 	let answer;
 
+	const getAnswer = (ans) => {
+		if (ans.startsWith("\"")) {
+			return ans.replace(/"/g, "");
+		}
+		else{
+			return +ans;
+		}
+	}
+
 	if (part === "1") {
 		const part1 = answersContent.split("\n")[0];
-		answer = +part1.split(",")[1];
+		answer = getAnswer(part1.split(",")[1]);
 	} else if (part === "2") {
 		const part2 = answersContent.split("\n")[1];
-		answer = +part2.split(",")[1];
+		answer = getAnswer(part2.split(",")[1]);
 	} else {
 		console.log("I dont have answer for this yet");
 		exit(0);
