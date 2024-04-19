@@ -27,12 +27,21 @@ a.files:visited{color: indigo}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script src="../script.js"></script>
 </head>
 
 <body>
   <a class="nav" href="../">Back to solutions</a>  
   <br />
   <a class="nav" id="puzzle" href="">Puzzle</a>
+  
+  <br />
+  <br />
+
+  <div id="navigation">
+    <a href="#" onclick="navigateTo('prev')">Previous Day</a>
+    <a href="#"  onclick="navigateTo('next')">Next Day</a>
+  </div>
   <div id="viewer">
     <h1>Solution Viewer <b><span id="solutionTitle"/></b></h1>
     <h3><a class="files" href="./answer.txt">ANSWERS</a></h3>
