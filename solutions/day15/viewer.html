@@ -147,17 +147,17 @@
                     .then((response) => {
                         this.inputText = wrapLinesWithSpan(response);
                     });
-                fetch("./solution.ts")
+                fetch("./solution.js")
                     .then(response => response.text())
                     .then((response) => {
                         this.solutionText = wrapLinesWithSpan(response);
                     });
-                fetch(`../lib/day${day_}.ts`)
+                fetch(`../lib/day${day_}.js`)
                     .then(response => response.text())
                     .then((response) => {
                         this.libText = wrapLinesWithSpan(response);
                     });
-                fetch(`../../__tests__/day${day_}.ts`)
+                fetch(`../../__tests__/day${day_}.js`)
                     .then(response => response.text())
                     .then((response) => {
                         this.unitTestText = wrapLinesWithSpan(response);
