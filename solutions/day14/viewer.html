@@ -2,143 +2,178 @@
 <html>
 
 <head>
-  <title>Solution Viewer</title>
-  <style>
-    html,
-    body {
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
+    <title>Solution Viewer</title>
+    <style>
+        html,
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
 
-    pre {
-      border-radius: 0.5em;
-      padding: 0.5em;
-      background: #eee;
-      font-family: 'Courier New', Courier, monospace;
-    }
+        pre {
+            background: #303030;
+            color: #f1f1f1;
+            padding: 10px 16px;
+            border-radius: 2px;
+            border-top: 4px solid #00aeef;
+            -moz-box-shadow: inset 0 0 10px #000;
+            box-shadow: inset 0 0 10px #000;
+            counter-reset: line;
+        }
 
-    span {
-      text-transform: capitalize;
-      color: darkgreen;
-    }
+        pre span {
+            display: block;
+            line-height: 1.5rem;
+        }
 
-    a.nav {
-      color: black;
-    }
+        pre span:before {
+            counter-increment: line;
+            content: counter(line);
+            display: inline-block;
+            border-right: 1px solid #ddd;
+            padding: 0 .5em;
+            margin-right: .5em;
+            color: #888
+        }
 
-    a.nav:visited {
-      color: black;
-    }
+        span {
+            font-family: monospace;
+            font-size: 16px;
+        }
 
-    a.files {
-      color: indigo;
-      text-decoration: none;
-    }
+        a.nav {
+            color: black;
+        }
 
-    a.files:hover {
-      text-decoration: underline;
-    }
+        a.nav:visited {
+            color: black;
+        }
 
-    a.files:visited {
-      color: indigo;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-<script src="../script.js"></script>
+        a.files {
+            color: indigo;
+            text-decoration: none;
+        }
+
+        a.files:hover {
+            text-decoration: underline;
+        }
+
+        a.files:visited {
+            color: indigo;
+        }
+
+        h2{
+            color: darkgreen;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="../script.js"></script>
 </head>
 
 <body>
-  <a class="nav" href="../">Back to solutions</a>
+    <a class="nav" href="../">Back to solutions</a>
 
-  <br />
-  
-  <a class="nav" id="puzzle" href="">Puzzle</a>
-  
-  <br />
-  <br />
+    <br />
 
-  <div id="navigation">
-    <a href="#" onclick="navigateTo('prev')">Previous Day</a>
-    <a href="#"  onclick="navigateTo('next')">Next Day</a>
-  </div>
+    <a class="nav" id="puzzle" href="">Puzzle</a>
 
-  <div id="viewer">
-    <h1>
-      Solution Viewer <b><span id="solutionTitle" /></b>
-    </h1>
+    <br />
+    <br />
 
-    <h3>
-      <a class="files" href="./answer.txt">ANSWERS</a>
-    </h3>
-    <pre><code>{{ answerText }}</code></pre>
+    <div id="navigation">
+        <a href="#" onclick="navigateTo('prev')">Previous Day</a>
+        <a href="#" onclick="navigateTo('next')">Next Day</a>
+    </div>
 
-    <h3>
-      <a class="files" href="../lib/day14.js">lib</a>
-    </h3>
-    <pre><code>{{ libText }}</code></pre>
-    
-    <h3>
-      <a class="files" href="../../__tests__/day14.js">unit tests</a>
-    </h3>
-    <pre><code>{{ unitTestText }}</code></pre>
+    <div id="viewer">
+        <h1>
+            Solution Viewer
+        </h1>
+        <h2 id="solutionTitle">
+            &nbsp;
+        </h2>
+        <h3>
+            <a class="files" href="./answer.txt">ANSWERS</a>
+        </h3>
+        <pre><span v-html="answerText"></span></pre>
 
-    <h3>
-      <a class="files" href="./solution.js">solution.js</a>
-    </h3>
-    <pre><code>{{ solutionText }}</code></pre>
+        <h3>
+            <a class="files" href="../lib/day25.ts">lib</a>
+        </h3>
+        <pre><span v-html="libText"></span></pre>
 
-    <h3>
-      <a class="files" href="./input.txt">input.txt</a>
-    </h3>
-    <pre><code>{{ inputText }}</code></pre>
-  </div>
-  <script>
-    const viewer = new Vue({
-      el: "#viewer",
-      data: {
-        inputText: "-Loading-",
-        solutionText: "-Loading-",
-        answerText: "-Loading-",
-        libText: "-Loading-",
-        unitTestText: "-Loading-"
-      },
-      mounted() {
-        fetch("./answer.txt")
-          .then(response => response.text())
-          .then((data) => {
-            this.answerText = data;
-          });
-        fetch("./input.txt")
-          .then(response => response.text())
-          .then((response) => {
-            this.inputText = response;
-          });
-        fetch("./solution.js")
-          .then(response => response.text())
-          .then((response) => {
-            this.solutionText = response;
-          });
-        fetch("../lib/day14.js")
-          .then(response => response.text())
-          .then((response) => {
-            this.libText = response;
-          });
-        fetch("../../__tests__/day14.js")
-          .then(response => response.text())
-          .then((response) => {
-            this.unitTestText = response;
-          });
+        <h3>
+            <a class="files" href="../../__tests__/day25.ts">unit tests</a>
+        </h3>
+        <pre><span v-html="unitTestText"></span></pre>
 
-      }
-    });
-    viewer.$mount("#viewer");
+        <h3>
+            <a class="files" href="./solution.ts">solution.ts</a>
+        </h3>
+        <pre><span v-html="solutionText"></span></pre>
 
-    const solutionTitle = (document.location.href + "").split("/").reverse()[1];
-    const solutionDay = solutionTitle.split("day")[1];
+        <h3>
+            <a class="files" href="./input.txt">input.txt</a>
+        </h3>
+        <pre><span v-html="inputText"></span></pre>
+    </div>
+    <script>
+        const day_ = "14";
 
-    document.getElementById("solutionTitle").innerText = solutionTitle;
-    document.title = solutionTitle;
-    document.getElementById("puzzle").href = "https://adventofcode.com/2023/day/" + solutionDay;
-  </script>
+        function wrapLinesWithSpan(text) {
+            const lines = text.split("\n");
+
+            const wrappedLines = lines.map(line => `<span>${line}</span>`);
+
+            return wrappedLines.join("\n");
+        }
+
+        const viewer = new Vue({
+            el: "#viewer",
+            data: {
+                inputText: "-Loading-",
+                solutionText: "-Loading-",
+                answerText: "-Loading-",
+                libText: "-Loading-",
+                unitTestText: "-Loading-"
+            },
+            mounted() {
+                fetch("./answer.txt")
+                    .then(response => response.text())
+                    .then((response) => {
+                        this.answerText = wrapLinesWithSpan(response);
+                    });
+                fetch("./input.txt")
+                    .then(response => response.text())
+                    .then((response) => {
+                        this.inputText = wrapLinesWithSpan(response);
+                    });
+                fetch("./solution.ts")
+                    .then(response => response.text())
+                    .then((response) => {
+                        this.solutionText = wrapLinesWithSpan(response);
+                    });
+                fetch(`../lib/day${day_}.ts`)
+                    .then(response => response.text())
+                    .then((response) => {
+                        this.libText = wrapLinesWithSpan(response);
+                    });
+                fetch(`../../__tests__/day${day_}.ts`)
+                    .then(response => response.text())
+                    .then((response) => {
+                        this.unitTestText = wrapLinesWithSpan(response);
+                    });
+
+            }
+        });
+        viewer.$mount("#viewer");
+
+        const solutionTitle = (document.location.href + "").split("/").reverse()[1];
+        const solutionDay = solutionTitle.split("day")[1];
+        const yearOfChallenge = (document.location.href + "").split("/").reverse()[3].split("AdventOfCode")[1];
+        document.getElementById("solutionTitle").innerText = solutionTitle;
+        document.title = solutionTitle;
+        document.getElementById("puzzle").href = `https://adventofcode.com/${yearOfChallenge}/day/${solutionDay}`;
+    </script>
 </body>
 
 </html>
