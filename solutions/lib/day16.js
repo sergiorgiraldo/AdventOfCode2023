@@ -103,12 +103,13 @@ function getNextDirections(current, direction) {
         
 		"-": { r: ["r"], l: ["l"], u: ["r", "l"], d: ["r", "l"] }, //splitter horizontally
         
-		"/": { r: ["u"], l: ["d"], u: ["r"], d: ["l"] }, //mirror
+		"/": { r: ["u"], l: ["d"], u: ["r"], d: ["l"] }, 		   //mirror
         
-		"\\": { r: ["d"], l: ["u"], u: ["l"], d: ["r"] }, //mirror
+		"\\": { r: ["d"], l: ["u"], u: ["l"], d: ["r"] }, 		   //mirror
 
-		".": { r: ["r"], l: ["l"], u: ["u"], d: ["d"] } //pass-through
+		".": { r: ["r"], l: ["l"], u: ["u"], d: ["d"] } 		   //pass-through
 	};
+	
 	return map[current][direction];
 }
 

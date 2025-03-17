@@ -1,18 +1,16 @@
-function getSumOfPredictedValuesFuture(lines) {
-	const predictedValues = lines.map((line) =>
-		predictValue(line, inTheFuture)
-	);
-
-	const sum = predictedValues.reduce((acc, curr) => acc + curr, 0);
-
-	return sum;
+function getSumOfPredictedValuesPast(lines) {
+	return getSumOfPredictedValues(lines, inThePast);
 }
 
-function getSumOfPredictedValuesPast(lines) {
-	const predictedValues = lines.map((line) => 
-        predictValue(line, inThePast)
-    );
-	
+function getSumOfPredictedValuesFuture(lines) {
+	return getSumOfPredictedValues(lines, inTheFuture);
+}
+
+function getSumOfPredictedValues(lines, when){
+	const predictedValues = lines.map((line) =>
+		predictValue(line, when)
+	);
+
 	const sum = predictedValues.reduce((acc, curr) => acc + curr, 0);
 
 	return sum;

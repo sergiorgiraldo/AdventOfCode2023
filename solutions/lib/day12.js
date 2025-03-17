@@ -59,7 +59,8 @@ function getConditions(combination) {
 	
 	if (matches === null) {
 		return "";
-	} else {
+	} 
+	else {
 		const lengths = matches.map((match) => match.length);
 		return lengths.join(",");
 	}
@@ -88,7 +89,8 @@ function generateCombinations(springs) {
 				"#" +
 				springs.substring(questionMarkPosition + 1);
 			recurse(hashString);
-		} else {
+		} 
+		else {
 			combinations.push(springs);
 		}
 	}

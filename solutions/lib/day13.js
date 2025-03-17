@@ -88,7 +88,7 @@ function isMirroredWithSmudges(pattern, row) {
 		if (patternA !== patternB) {
 			for (let i = 0; i < patternA.length; i++) {
 				if (patternA[i] !== patternB[i]) {
-					// we must only have one smudge to have a reflection
+					// we must have only one smudge to have a reflection
 					if (smudgeFound) return false;
 					smudgeFound = true;
 				}

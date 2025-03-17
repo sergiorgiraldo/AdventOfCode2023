@@ -84,7 +84,7 @@ function tiltNorth(lever) {
 	return lever;
 }
 
-//if tilting south, we move left
+//if tilting west, we move left
 function tiltWest(lever) {
 	for (let i = 0; i < lever.length; i++) {
 		let W = 0;

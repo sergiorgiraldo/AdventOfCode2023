@@ -70,7 +70,8 @@ function checkRatingsInRange(batch, workflowName, accepted, workflows) {
 					);
 
 					return;
-				} else if (range[0] < rule.value) {
+				} 
+				else if (range[0] < rule.value) {
 					// part of batch satisfies
 					// make sure we have acceptable ranges in the new batch and continue with the rest of the rules
 					// create two new batches using the rule value to split them
@@ -107,7 +108,8 @@ function checkRatingsInRange(batch, workflowName, accepted, workflows) {
 					);
 
 					return;
-				} else if (range[1] > rule.value + 1) {
+				} 
+				else if (range[1] > rule.value + 1) {
 					// part of batch satisfies
 					// make sure we have acceptable ranges in the new batch and continue with the rest of the rules
 					// create two new batch using the rule value to split them
